@@ -3,8 +3,8 @@ package main
 import (
 	"os"
 
-	_ "github.com/mailru/go-clickhouse" // Mail.RU's clickhouse connector
 	"github.com/urfave/cli"
+	_ "github.com/DenisCheremisov/binenc"   // Binary encoding library
 )
 
 func main() {
