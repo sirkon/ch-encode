@@ -4,7 +4,7 @@ import (
 	"os"
 
 	"github.com/urfave/cli"
-	_ "github.com/DenisCheremisov/binenc"   // Binary encoding library
+	_ "github.com/DenisCheremisov/binenc"   // Binary encoding library go get's "dependency", generated package will need it
 )
 
 func main() {
