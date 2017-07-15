@@ -4,7 +4,8 @@ import (
 	"os"
 
 	"github.com/urfave/cli"
-	_ "github.com/DenisCheremisov/binenc"   // Binary encoding library go get's "dependency", generated package will need it
+	_ "github.com/DenisCheremisov/binenc" // Binary encoding library go get's "dependency", generated package will need it
+	_ "github.com/mailru/go-clickhouse"   // Mail.RU's clickhouse connector
 )
 
 func main() {
