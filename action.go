@@ -1,16 +1,17 @@
 package main
 
 import (
+	"bytes"
 	"database/sql"
 	"encoding/json"
 	"io"
 	"io/ioutil"
 	"os"
-	"os/exec"
 
 	"github.com/DenisCheremisov/ch-encode/generator"
 	"github.com/DenisCheremisov/ch-encode/generator/chstuff"
 	"github.com/DenisCheremisov/ch-encode/util"
+	"github.com/DenisCheremisov/gosrcfmt"
 	"github.com/DenisCheremisov/gotify"
 	"github.com/DenisCheremisov/message"
 	"github.com/go-yaml/yaml"
@@ -76,37 +77,21 @@ func action(c *cli.Context) error {
 			fields = append(fields, chstuff.Meta2Field(meta))
 		}
 
-		cmd := exec.Command("goimports")
-		cmd.Stderr = os.Stderr
-		writer, err := cmd.StdinPipe()
-		if err != nil {
-			message.Critical(err)
-		}
-		var output io.WriteCloser
-		if !isTesting {
-			output, err = GoModule(goish, table)
-			cmd.Stdout = output
-			if err != nil {
-				message.Critical(err)
-			}
-		} else {
-			output = os.Stdout
-			cmd.Stdout = os.Stdout
-		}
-
+		writer := &bytes.Buffer{}
 		gen := gogen.New(table, goish, writer)
-		if err = cmd.Start(); err != nil {
-			message.Critical(err)
-		}
 		if err = generator.Generate(gen, fields); err != nil {
 			message.Critical(err)
 		}
-		if err = writer.Close(); err != nil {
-			message.Critical(err)
+		var output io.WriteCloser
+		if isTesting {
+			output = os.Stdout
+		} else {
+			output, err = GoModule(goish, table)
+			if err != nil {
+				message.Critical(err)
+			}
 		}
-		if err = cmd.Wait(); err != nil {
-			message.Critical(err)
-		}
+		gosrcfmt.FormatReader(output, writer)
 		if err = output.Close(); err != nil {
 			message.Critical(err)
 		}

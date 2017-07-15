@@ -41,7 +41,6 @@ func (gg *GoGen) Header() error {
                stdtime "time"
                "github.com/DenisCheremisov/binenc"
                "bytes"
-               "fmt"
                "io"
             )
         `,
