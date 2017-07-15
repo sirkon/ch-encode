@@ -13,7 +13,7 @@ func main() {
 	app.Flags = []cli.Flag{
 		cli.BoolFlag{
 			Name:  "test",
-			Usage: "don't save generated code and write it into the stdout",
+			Usage: "don't save generated code, just show it in the stdout",
 		},
 		cli.StringFlag{
 			Name:  "yaml-dict",
