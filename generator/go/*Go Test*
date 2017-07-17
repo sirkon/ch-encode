@@ -1,5 +1,0 @@
--*- mode: go-test; default-directory: "~/Sources/test/src/github.com/DenisCheremisov/ch-insert/generator/go/" -*-
-Go-Test started at Fri Jul 14 00:33:49
-
-go test ./...
-?   	github.com/DenisCheremisov/ch-insert/generator/go	[no test files]
