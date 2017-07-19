@@ -4,7 +4,7 @@ import (
 	"fmt"
 	"text/template"
 
-	"github.com/DenisCheremisov/ch-encode/generator"
+	"github.com/glossina/ch-encode/generator"
 )
 
 // Int8Encoding ...

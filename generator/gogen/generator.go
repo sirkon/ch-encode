@@ -4,7 +4,7 @@ import (
 	"fmt"
 	"io"
 
-	"github.com/DenisCheremisov/gotify"
+	"github.com/glossina/gotify"
 )
 
 // GoGen encoder code generation for Go language

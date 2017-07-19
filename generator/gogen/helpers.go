@@ -5,7 +5,7 @@ import (
 	"sort"
 	"strings"
 
-	"github.com/DenisCheremisov/ch-encode/generator"
+	"github.com/glossina/ch-encode/generator"
 )
 
 // EnumHelpers ...

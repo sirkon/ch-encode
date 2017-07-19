@@ -7,7 +7,7 @@ import (
 	"os"
 	"path/filepath"
 
-	"github.com/DenisCheremisov/gotify"
+	"github.com/glossina/gotify"
 )
 
 // GoModule creates

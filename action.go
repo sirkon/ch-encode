@@ -8,16 +8,15 @@ import (
 	"io/ioutil"
 	"os"
 
-	"github.com/DenisCheremisov/ch-encode/generator"
-	"github.com/DenisCheremisov/ch-encode/generator/chstuff"
-	"github.com/DenisCheremisov/ch-encode/util"
-	"github.com/DenisCheremisov/gosrcfmt"
-	"github.com/DenisCheremisov/gotify"
-	"github.com/DenisCheremisov/message"
+	"github.com/glossina/ch-encode/generator"
+	"github.com/glossina/ch-encode/generator/chstuff"
+	"github.com/glossina/ch-encode/generator/gogen"
+	"github.com/glossina/ch-encode/util"
+	"github.com/glossina/gosrcfmt"
+	"github.com/glossina/gotify"
+	"github.com/glossina/message"
 	"github.com/go-yaml/yaml"
 	"github.com/urfave/cli"
-
-	"github.com/DenisCheremisov/ch-encode/generator/go"
 )
 
 func yamlSource(path string) map[string]string {

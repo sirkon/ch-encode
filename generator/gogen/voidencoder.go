@@ -3,7 +3,7 @@ package gogen
 import (
 	"fmt"
 
-	"github.com/DenisCheremisov/ch-encode/generator"
+	"github.com/glossina/ch-encode/generator"
 )
 
 // VoidEncoderDef ...

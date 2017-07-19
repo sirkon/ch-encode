@@ -3,7 +3,7 @@ package chstuff
 import (
 	"fmt"
 
-	"github.com/DenisCheremisov/ch-encode/generator"
+	"github.com/glossina/ch-encode/generator"
 )
 
 // Meta2Field translates clickhouse field metainfo into generator Field object

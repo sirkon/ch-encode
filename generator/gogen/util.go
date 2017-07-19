@@ -4,7 +4,7 @@ import (
 	"fmt"
 	"strings"
 
-	"github.com/DenisCheremisov/ch-encode/generator"
+	"github.com/glossina/ch-encode/generator"
 )
 
 func (gg *GoGen) interfaceEncoderName() string {

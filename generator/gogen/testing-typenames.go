@@ -1,6 +1,6 @@
 package gogen
 
-import "github.com/DenisCheremisov/ch-encode/generator"
+import "github.com/glossina/ch-encode/generator"
 
 // Int8TestingTypeName ...
 func (gg *GoGen) Int8TestingTypeName() string {

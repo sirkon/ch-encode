@@ -5,7 +5,7 @@ import (
 	"strings"
 	"text/template"
 
-	"github.com/DenisCheremisov/ch-encode/generator"
+	"github.com/glossina/ch-encode/generator"
 )
 
 // TestDef ...
