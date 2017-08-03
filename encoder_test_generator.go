@@ -8,8 +8,8 @@ import (
 	"strings"
 	"text/template"
 
-	"github.com/glossina/ch-encode/util"
-	"github.com/glossina/gosrcfmt"
+	"github.com/sirkon/ch-encode/util"
+	"github.com/sirkon/gosrcfmt"
 )
 
 // EncoderReflectionTest checks if table encoder reflects current table scheme

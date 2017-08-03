@@ -5,7 +5,7 @@ import (
 	"net/http"
 	"os"
 
-	"github.com/glossina/message"
+	"github.com/sirkon/message"
 )
 
 // CHParams clickhouse connection coordinates

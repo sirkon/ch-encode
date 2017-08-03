@@ -3,7 +3,7 @@ package main
 import (
 	"os"
 
-	_ "github.com/glossina/binenc"      // Binary encoding library go get's "dependency", generated package will need it
+	_ "github.com/sirkon/binenc"      // Binary encoding library go get's "dependency", generated package will need it
 	_ "github.com/mailru/go-clickhouse" // Mail.RU's clickhouse connector
 	"github.com/urfave/cli"
 )

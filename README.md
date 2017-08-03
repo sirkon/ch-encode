@@ -25,7 +25,7 @@ function call output which represents a table record must not be splitted)
 
 # How to use
 ```bash
-go get github.com/glossina/ch-encode
+go get github.com/sirkon/ch-encode
 ```
 then
 ```bash
