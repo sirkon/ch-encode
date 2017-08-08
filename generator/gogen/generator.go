@@ -39,7 +39,7 @@ func (gg *GoGen) Header() error {
 
 			import (
                stdtime "time"
-               "github.com/DenisCheremisov/binenc"
+               "github.com/sirkon/binenc"
                "bytes"
                "io"
             )
