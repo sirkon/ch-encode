@@ -7,7 +7,7 @@ String | FixedString(N) | UIntX | IntX | EnumX | Array(T)|FloatX
 What is not supported:
 1. Arrays of arrays
 2. Nested structures - there's no "direct" support for them. They are accessible anyway since they are represented as regular array fields with "dotted" name like `nested.subfield` and constraint on their length at DB level — they all must have the same length. Thus, nested fields can be filled as regular arrays without length check.
-3. Nullable fields (will be added as soon as they release it into production)
+3. Nullable fields (will be added as soon as they will be released into production)
 
 ## The problem
 * Tables can be wide and thus generating proper INSERT statements is a source of errors itself.
