@@ -7,8 +7,8 @@ import (
 )
 
 // Types ...
-func (gg *GoGen) Types(fields []generator.Field) (err error) {
-	for _, field := range fields {
+func (gg *GoGen) Types(fields *generator.FieldSet) (err error) {
+	for _, field := range fields.List() {
 		if err = gg.TypeDef(field); err != nil {
 			return
 		}

@@ -71,13 +71,14 @@ func action(c *cli.Context) error {
 		if err != nil {
 			message.Critical(err)
 		}
-		fields := []generator.Field{}
-		for _, meta := range metas {
-			fields = append(fields, chstuff.Meta2Field(meta))
-		}
 
 		partWriter := &bytes.Buffer{}
 		gen := gogen.New(table, goish, partWriter)
+		fields := generator.NewFieldSet(gen)
+		for _, meta := range metas {
+			fields.Add(chstuff.Meta2Field(meta))
+		}
+
 		if err = generator.Generate(gen, fields); err != nil {
 			message.Critical(err)
 		}

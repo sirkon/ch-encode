@@ -21,8 +21,8 @@ func (gg *GoGen) TestDef(fields *generator.FieldSet) error {
 		Name string
 		Type string
 	}
-	items := make([]item, len(fields))
-	for i, field := range fields {
+	items := make([]item, len(fields.List()))
+	for i, field := range fields.List() {
 		items[i].Name = field.AccessName(gg)
 		items[i].Type = field.TestingTypeName(gg)
 	}
@@ -76,7 +76,7 @@ func (gg *GoGen) TestEncodingMethod(fields *generator.FieldSet) (err error) {
 	if err = gg.RawData(strings.Join(lines, "\n")); err != nil {
 		return
 	}
-	for _, field := range fields {
+	for _, field := range fields.List() {
 		if _, err = fmt.Fprintf(gg.dest, "%s:", field.AccessName(gg)); err != nil {
 			return
 		}

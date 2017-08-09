@@ -7,13 +7,13 @@ import (
 )
 
 // VoidEncoderDef ...
-func (gg *GoGen) VoidEncoderDef([]generator.Field) error {
+func (gg *GoGen) VoidEncoderDef(*generator.FieldSet) error {
 	_, err := fmt.Fprintf(gg.dest, "type %s bool\n", gg.voidEncoderName())
 	return err
 }
 
 // VoidEncodingMethod ...
-func (gg *GoGen) VoidEncodingMethod(fields []generator.Field) error {
+func (gg *GoGen) VoidEncodingMethod(fields *generator.FieldSet) error {
 	_, err := fmt.Fprintf(
 		gg.dest,
 		`

@@ -8,7 +8,7 @@ import (
 )
 
 // FilterEncoderDef ...
-func (gg *GoGen) FilterEncoderDef(field []generator.Field) error {
+func (gg *GoGen) FilterEncoderDef(field *generator.FieldSet) error {
 	text :=
 		`
 		type {{.encoder}} struct {
@@ -41,7 +41,7 @@ func (gg *GoGen) FilterEncoderDef(field []generator.Field) error {
 }
 
 // FilterEncodingMethod ...
-func (gg *GoGen) FilterEncodingMethod(fields []generator.Field) error {
+func (gg *GoGen) FilterEncodingMethod(fields *generator.FieldSet) error {
 	text :=
 		`
         func (enc *{{.encoder}}) Encode({{.args}}) error {
@@ -56,7 +56,7 @@ func (gg *GoGen) FilterEncodingMethod(fields []generator.Field) error {
 		return err
 	}
 	app := []string{}
-	for _, field := range fields {
+	for _, field := range fields.List() {
 		app = append(app, field.ArgName(gg))
 	}
 	return tmpl.Execute(gg.dest, map[string]string{
