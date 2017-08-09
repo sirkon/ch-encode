@@ -8,6 +8,7 @@ import (
 	"io/ioutil"
 	"os"
 
+	"github.com/go-yaml/yaml"
 	"github.com/sirkon/ch-encode/generator"
 	"github.com/sirkon/ch-encode/generator/chstuff"
 	"github.com/sirkon/ch-encode/generator/gogen"
@@ -15,7 +16,6 @@ import (
 	"github.com/sirkon/gosrcfmt"
 	"github.com/sirkon/gotify"
 	"github.com/sirkon/message"
-	"github.com/go-yaml/yaml"
 	"github.com/urfave/cli"
 )
 
@@ -76,11 +76,12 @@ func action(c *cli.Context) error {
 			fields = append(fields, chstuff.Meta2Field(meta))
 		}
 
-		writer := &bytes.Buffer{}
-		gen := gogen.New(table, goish, writer)
+		partWriter := &bytes.Buffer{}
+		gen := gogen.New(table, goish, partWriter)
 		if err = generator.Generate(gen, fields); err != nil {
 			message.Critical(err)
 		}
+		writer := &bytes.Buffer{}
 		var output io.WriteCloser
 		if isTesting {
 			output = os.Stdout
@@ -90,6 +91,8 @@ func action(c *cli.Context) error {
 				message.Critical(err)
 			}
 		}
+		gen.Header(writer)
+		io.Copy(writer, partWriter)
 		gosrcfmt.FormatReader(output, writer)
 		if err = output.Close(); err != nil {
 			message.Critical(err)
@@ -105,7 +108,7 @@ func action(c *cli.Context) error {
 		if err != nil {
 			message.Critical(err)
 		}
+		message.Noticef("Table `\033[1m%s\033[0m` encoder generated", table)
 	}
-	message.Infof("bos_access table encoder generated")
 	return nil
 }

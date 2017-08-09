@@ -57,24 +57,28 @@ func (gg *GoGen) Uint64Encoding(source string) error {
 
 // Float32Encoding ...
 func (gg *GoGen) Float32Encoding(source string) error {
+	gg.useUnsafe()
 	_, err := fmt.Fprintf(gg.dest, "enc.buffer.Write(enc.helper.Uint32(*(*uint32)(unsafe.Pointer(&%s))));\n", source)
 	return err
 }
 
 // Float64Encoding ...
 func (gg *GoGen) Float64Encoding(source string) error {
+	gg.useUnsafe()
 	_, err := fmt.Fprintf(gg.dest, "enc.buffer.Write(enc.helper.Uint64(*(*uint64)(unsafe.Pointer(&%s))));\n", source)
 	return err
 }
 
 // DateEncoding ...
 func (gg *GoGen) DateEncoding(source string) error {
+	gg.useTime()
 	_, err := fmt.Fprintf(gg.dest, "enc.buffer.Write(enc.helper.Uint16(uint16(%s)));\n", source)
 	return err
 }
 
 // DateTimeEncoding ...
 func (gg *GoGen) DateTimeEncoding(source string) error {
+	gg.useTime()
 	_, err := fmt.Fprintf(gg.dest, "enc.buffer.Write(enc.helper.Uint32(uint32(%s)));\n", source)
 	return err
 }
@@ -91,6 +95,7 @@ func (gg *GoGen) StringEncoding(source string) error {
 
 // FixedStringEncoding ...
 func (gg *GoGen) FixedStringEncoding(source string, length int) error {
+	gg.useFmt()
 	text := `
 if len({{.var}}) != {{.length}} {
     return fmt.Errorf("string {{.var}} must be {{.length}} bytes long, got %d bytes intsead (\"\033[1m%s\033[0m\", %v)", len({{.var}}), string({{.var}}), {{.var}})

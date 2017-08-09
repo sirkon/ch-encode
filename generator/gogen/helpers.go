@@ -46,6 +46,7 @@ func (gg *GoGen) EnumHelpers(field generator.Field, safeValues map[string]int) e
 
 // DateHelpers ...
 func (gg *GoGen) DateHelpers(field generator.Field) error {
+	gg.useTime()
 	lines := []string{
 		fmt.Sprintf("type compl%s bool", field.TypeName(gg)),
 		fmt.Sprintf(`
@@ -65,6 +66,7 @@ func (gg *GoGen) DateHelpers(field generator.Field) error {
 
 // DateTimeHelpers ...
 func (gg *GoGen) DateTimeHelpers(field generator.Field) error {
+	gg.useTime()
 	lines := []string{
 		fmt.Sprintf("type compl%s bool", field.TypeName(gg)),
 		fmt.Sprintf(`

@@ -1,9 +1,13 @@
 package generator
 
+import "io"
+
 // Generator abstraction
 type Generator interface {
 	RawData(string) error
-	Header() error
+
+	// Custom dest is to workaround strict Golang policies unused imports
+	Header(dest io.Writer) error
 
 	////////////////////////////////////
 	////////////// Production purposes
