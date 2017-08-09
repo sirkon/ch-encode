@@ -2,7 +2,6 @@ package gogen
 
 import (
 	"fmt"
-	"strings"
 	"text/template"
 
 	"github.com/sirkon/ch-encode/generator"
@@ -69,11 +68,13 @@ func (gg *GoGen) TestEncoderDef(*generator.FieldSet) error {
 
 // TestEncodingMethod ...
 func (gg *GoGen) TestEncodingMethod(fields *generator.FieldSet) (err error) {
-	lines := []string{
-		fmt.Sprintf("func (enc *%s) Encode(%s) error{", gg.testingEncoderName(), gg.argList(fields)),
-		fmt.Sprintf("enc.Result = append(enc.Result, %s{\n", gg.testingResultName()),
+	if err = gg.RawData(fmt.Sprintf("func (enc *%s)Encode(%s) error{", gg.testingEncoderName(), gg.argList(fields))); err != nil {
+		return
 	}
-	if err = gg.RawData(strings.Join(lines, "\n")); err != nil {
+	if err = gg.constraints(fields); err != nil {
+		return
+	}
+	if err = gg.RawData(fmt.Sprintf("enc.Result = append(enc.Result, %s{\n", gg.testingResultName())); err != nil {
 		return
 	}
 	for _, field := range fields.List() {

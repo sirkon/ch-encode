@@ -62,13 +62,19 @@ func (gg *GoGen) EncoderDef(*generator.FieldSet) error {
 	if err != nil {
 		return err
 	}
-	return tmpl.Execute(gg.dest, map[string]string{"encoderName": gg.encoderName()})
+
+	return tmpl.Execute(gg.dest, map[string]string{
+		"encoderName": gg.encoderName(),
+	})
 }
 
 // EncodingMethod ...
 func (gg *GoGen) EncodingMethod(fields *generator.FieldSet) (err error) {
 	text := "func (enc *%s) Encode(%s) error {\nenc.buffer.Reset();\n"
 	if err = gg.RawData(fmt.Sprintf(text, gg.encoderName(), gg.argList(fields))); err != nil {
+		return
+	}
+	if err = gg.constraints(fields); err != nil {
 		return
 	}
 	for _, field := range fields.List() {

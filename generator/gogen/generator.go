@@ -5,6 +5,7 @@ import (
 	"io"
 	"text/template"
 
+	"github.com/sirkon/ch-encode/generator"
 	"github.com/sirkon/gotify"
 )
 
@@ -93,6 +94,44 @@ func (gg *GoGen) Header(dest io.Writer) error {
 	ctx.Imports = gg.imports
 	if err := tmpl.Execute(dest, ctx); err != nil {
 		return err
+	}
+	return nil
+}
+
+const constraintCheck = `
+if len({{.First}}) != len({{.Current}}) {
+   return fmt.Errorf("length mismatch between {{.First}} and {{.Current}} (%d != %d), lengths must be the same being subfields of {{.Nest}}",
+  len({{.First}}), len({{.Current}}))
+}
+`
+
+// Constraints ...
+func (gg *GoGen) constraints(fields *generator.FieldSet) error {
+	nests := fields.Nests()
+	t := template.New("constraint if")
+	tmpl, err := t.Parse(constraintCheck)
+	if err != nil {
+		return err
+	}
+	var ctx struct {
+		First   string
+		Current string
+		Nest    string
+	}
+	for nested, subfields := range nests {
+		ctx.Nest = nested
+		if len(subfields) <= 1 {
+			continue
+		}
+		gg.useFmt()
+		gg.dest.Write([]byte(fmt.Sprintf("\n// constraints on %s nested field", nested)))
+		ctx.First = subfields[0].ArgName(gg)
+		for _, restItem := range subfields[1:] {
+			ctx.Current = restItem.ArgName(gg)
+			if err = tmpl.Execute(gg.dest, ctx); err != nil {
+				return err
+			}
+		}
 	}
 	return nil
 }

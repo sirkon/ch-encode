@@ -46,8 +46,8 @@ import (
 "io/ioutil"
 "strings"
 
-    "github.com/DenisCheremisov/ch-encode/util"
-    "github.com/sergi/go-diff/diffmatchpatch"
+    "github.com/sirkon/ch-encode/util"
+    "github.com/sirkon/go-diff"
 )
 ` +
 		"const sampleTable = `" + sampleTable + "`" + `
