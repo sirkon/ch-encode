@@ -13,7 +13,7 @@ type Generator interface {
 	////////////// Production purposes
 
 	// Types generates type definitions for all fields
-	Types([]Field) error
+	Types(*FieldSet) error
 
 	// TypeDef generates type definition for the field
 	TypeDef(Field) error
@@ -22,43 +22,43 @@ type Generator interface {
 	HelperDef(Field) error
 
 	// EncoderInterface generates encoding interface
-	EncoderInterface([]Field) error
+	EncoderInterface(*FieldSet) error
 
 	// EncoderDef generates production encoder
-	EncoderDef([]Field) error
+	EncoderDef(*FieldSet) error
 
 	// EncodeMethod generates
-	EncodingMethod([]Field) error
+	EncodingMethod(*FieldSet) error
 
 	////////////////////////////////////
 	////////////// Production date filter
 
 	// FilterEncoderDef generates encoder with filter
-	FilterEncoderDef([]Field) error
+	FilterEncoderDef(*FieldSet) error
 
 	// FilterEncodingMethod generates
-	FilterEncodingMethod([]Field) error
+	FilterEncodingMethod(*FieldSet) error
 
 	////////////////////////////////////
 	////////////// Void purposes
 
 	// VoidEncoderDef generates encoder that does nothing
-	VoidEncoderDef([]Field) error
+	VoidEncoderDef(*FieldSet) error
 
 	//VoidEncodingMethod
-	VoidEncodingMethod([]Field) error
+	VoidEncodingMethod(*FieldSet) error
 
 	////////////////////////////////////
 	////////////// Testing purposes
 
 	// TestDef generates record representation for testing purposes
-	TestDef([]Field) error
+	TestDef(*FieldSet) error
 
 	// TestEncoderDef generates encoder aimed for testing
-	TestEncoderDef([]Field) error
+	TestEncoderDef(*FieldSet) error
 
 	// TestEncodingMethod Encode method generator
-	TestEncodingMethod([]Field) error
+	TestEncodingMethod(*FieldSet) error
 
 	EasyTypeName(string) string
 	UneasyTypeName(string) string

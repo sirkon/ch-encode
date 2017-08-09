@@ -9,7 +9,7 @@ import (
 )
 
 // TestDef ...
-func (gg *GoGen) TestDef(fields []generator.Field) error {
+func (gg *GoGen) TestDef(fields *generator.FieldSet) error {
 	text :=
 		`
         type {{.record}} struct {
@@ -37,7 +37,7 @@ func (gg *GoGen) TestDef(fields []generator.Field) error {
 }
 
 // TestEncoderDef ...
-func (gg *GoGen) TestEncoderDef([]generator.Field) error {
+func (gg *GoGen) TestEncoderDef(*generator.FieldSet) error {
 	text :=
 		`
         type {{.encoder}} struct {
@@ -68,7 +68,7 @@ func (gg *GoGen) TestEncoderDef([]generator.Field) error {
 }
 
 // TestEncodingMethod ...
-func (gg *GoGen) TestEncodingMethod(fields []generator.Field) (err error) {
+func (gg *GoGen) TestEncodingMethod(fields *generator.FieldSet) (err error) {
 	lines := []string{
 		fmt.Sprintf("func (enc *%s) Encode(%s) error{", gg.testingEncoderName(), gg.argList(fields)),
 		fmt.Sprintf("enc.Result = append(enc.Result, %s{\n", gg.testingResultName()),

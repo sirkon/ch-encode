@@ -8,7 +8,7 @@ import (
 )
 
 // EncoderInterface ...
-func (gg *GoGen) EncoderInterface(field []generator.Field) error {
+func (gg *GoGen) EncoderInterface(field *generator.FieldSet) error {
 	text :=
 		`
         type {{.encoderName}} interface {
@@ -28,7 +28,7 @@ func (gg *GoGen) EncoderInterface(field []generator.Field) error {
 }
 
 // EncoderDef ...
-func (gg *GoGen) EncoderDef([]generator.Field) error {
+func (gg *GoGen) EncoderDef(*generator.FieldSet) error {
 	text :=
 		`
         type {{.encoderName}} struct {
@@ -66,12 +66,12 @@ func (gg *GoGen) EncoderDef([]generator.Field) error {
 }
 
 // EncodingMethod ...
-func (gg *GoGen) EncodingMethod(fields []generator.Field) (err error) {
+func (gg *GoGen) EncodingMethod(fields *generator.FieldSet) (err error) {
 	text := "func (enc *%s) Encode(%s) error {\nenc.buffer.Reset();\n"
 	if err = gg.RawData(fmt.Sprintf(text, gg.encoderName(), gg.argList(fields))); err != nil {
 		return
 	}
-	for _, field := range fields {
+	for _, field := range fields.List() {
 		if err = field.Encoding(field.ArgName(gg), gg); err != nil {
 			return
 		}

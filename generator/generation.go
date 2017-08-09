@@ -1,8 +1,8 @@
 package generator
 
 // Generate generates encoding stuff
-func Generate(gen Generator, fields []Field) (err error) {
-	pieceGens := []func([]Field) error{
+func Generate(gen Generator, fields *FieldSet) (err error) {
+	pieceGens := []func(*FieldSet) error{
 		gen.Types,
 		gen.EncoderInterface,
 		gen.EncoderDef,

@@ -31,9 +31,9 @@ func (gg *GoGen) testingResultName() string {
 	return fmt.Sprintf("Testing%sResult", gg.goish.Public(gg.table))
 }
 
-func (gg *GoGen) argList(fields []generator.Field) string {
+func (gg *GoGen) argList(fields *generator.FieldSet) string {
 	res := []string{}
-	for _, field := range fields {
+	for _, field := range fields.List() {
 		res = append(res, fmt.Sprintf("%s %s", field.ArgName(gg), field.TypeName(gg)))
 	}
 	return strings.Join(res, ", ")
