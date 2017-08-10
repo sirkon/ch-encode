@@ -54,7 +54,8 @@ Example.
     ```yaml
     uid: UID
     ```
-    we use translation in order uid to be translated into UID in generated code
+    we use translation in order uid to be translated into UID in generated code. Something like
+    `first_uid` or `firstUid` will be translated into `firstUID` as well.
 3. Now generate encoder
     ```bash
     bin/ch-encode --yaml-dict=translation.yaml test
