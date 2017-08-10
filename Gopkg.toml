@@ -30,8 +30,8 @@
   name = "github.com/mailru/go-clickhouse"
 
 [[constraint]]
-  branch = "master"
   name = "github.com/sirkon/binenc"
+  version = "1.0.0"
 
 [[constraint]]
   branch = "master"
