@@ -6,7 +6,11 @@ String | FixedString(N) | UIntX | IntX | EnumX | Array(T)|FloatX|Nested
 
 What is not supported:
 1. Arrays of arrays
-3. Nullable fields (will be added as soon as they will be released into production)
+2. Nullable fields (will be added as soon as they will be released into production)
+
+And remember, nested types are supported in the same sense they are used in the Clickhouse itself: despite having clearly 
+nested declaration they are represented as ordinary fields with dotted names (`<nested name>.<subfield name>`) with DB level
+constraint on these fields (what are ordinary arrays of subfield's types) having the same length. We did the same: there's encoder level control implemented for Raw and Testing encoders for these arrays' length.
 
 ## The problem
 * Tables can be wide and thus generating proper INSERT statements is a source of errors itself.
