@@ -143,5 +143,5 @@ func (gg *GoGen) NullableEncoding(source string, field generator.Field) error {
 	if err := field.Encoding("*"+source, gg); err != nil {
 		return err
 	}
-	return gg.RawData("}")
+	return gg.RawData("} else { enc.buffer.WriteByte(byte(1)) }")
 }

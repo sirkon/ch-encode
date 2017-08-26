@@ -84,5 +84,5 @@ func (gg *GoGen) ArrayTestingTypeName(itemType generator.Field) string {
 
 // NullableTestingTypeName ...
 func (gg *GoGen) NullableTestingTypeName(itemType generator.Field) string {
-	return "[]" + itemType.TestingTypeName(gg)
+	return "*" + itemType.TestingTypeName(gg)
 }

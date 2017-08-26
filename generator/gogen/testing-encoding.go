@@ -164,6 +164,6 @@ func (gg *GoGen) ArrayTestEncoding(source string, field generator.Field) error {
 
 // NullableTestEncoding ...
 func (gg *GoGen) NullableTestEncoding(source string, field generator.Field) error {
-	_, err := fmt.Fprintf(gg.dest, "(*%s)(%s)", field.TestingTypeName(gg), source)
+	_, err := fmt.Fprintf(gg.dest, "(*%s)(%s),\n", field.TestingTypeName(gg), source)
 	return err
 }
