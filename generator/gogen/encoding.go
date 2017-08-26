@@ -134,3 +134,14 @@ func (gg *GoGen) ArrayEncoding(source string, field generator.Field) error {
 	}
 	return gg.RawData("}")
 }
+
+// NullableEncoding ...
+func (gg *GoGen) NullableEncoding(source string, field generator.Field) error {
+	if _, err := fmt.Fprintf(gg.dest, ";if %s != nil {\n", source); err != nil {
+		return err
+	}
+	if err := field.Encoding("*"+source, gg); err != nil {
+		return err
+	}
+	return gg.RawData("}")
+}

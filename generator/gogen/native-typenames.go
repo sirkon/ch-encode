@@ -66,3 +66,8 @@ func (gg *GoGen) FixedStringNativeTypeName() string {
 func (gg *GoGen) ArrayNativeTypeName(itemType generator.Field) string {
 	return "[]" + itemType.NativeTypeName(gg)
 }
+
+// NullableNativeTypeName ...
+func (gg *GoGen) NullableNativeTypeName(itemType generator.Field) string {
+	return "*" + itemType.NativeTypeName(gg)
+}
