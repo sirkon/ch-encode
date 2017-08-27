@@ -42,7 +42,9 @@ func Meta2Field(meta FieldMeta) (field generator.Field) {
 	case "Enum16":
 		field = generator.NewEnum16(meta.Name, meta.Type, meta.EnumData)
 	case "Array":
-		field = generator.NewArray(meta.Name, meta.Type, Meta2Field(*meta.ArraySubtype))
+		field = generator.NewArray(meta.Name, meta.Type, Meta2Field(*meta.Subtype))
+	case "Nullable":
+		field = generator.NewNullable(meta.Name, meta.Type, Meta2Field(*meta.Subtype))
 	default:
 		panic(fmt.Errorf("unsupported clickhouse type %s for field %s", meta.Type, meta.Name))
 	}
