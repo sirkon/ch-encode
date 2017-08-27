@@ -12,7 +12,7 @@ type FieldMeta struct {
 	Type           string
 	EnumData       map[string]int
 	FixedStringLen int
-	ArraySubtype   *FieldMeta
+	Subtype        *FieldMeta
 }
 
 func retreiveField(name, ftype string) (meta FieldMeta, err error) {
@@ -35,7 +35,7 @@ func retreiveField(name, ftype string) (meta FieldMeta, err error) {
 		if err != nil {
 			return meta, err
 		}
-		meta.ArraySubtype = &submeta
+		meta.Subtype = &submeta
 	} else if strings.HasPrefix(ftype, "FixedString(") && strings.HasSuffix(ftype, ")") {
 		meta.Type = "FixedString"
 		submeta := ftype[len("FixedString(") : len(ftype)-1]
@@ -44,6 +44,13 @@ func retreiveField(name, ftype string) (meta FieldMeta, err error) {
 			return meta, err
 		}
 		meta.FixedStringLen = int(length)
+	} else if strings.HasPrefix(ftype, "Nullable(") && strings.HasSuffix(ftype, ")") {
+		meta.Type = "Nullable"
+		submeta, err := retreiveField(name, ftype[9:len(ftype)-1])
+		if err != nil {
+			return meta, err
+		}
+		meta.Subtype = &submeta
 	} else {
 		meta.Type = ftype
 	}
