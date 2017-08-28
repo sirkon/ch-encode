@@ -1,8 +1,8 @@
 # ch-encode
 Clickhouse typesafe RowBinary insert data encoder generator for Go. Supported types:
 
-String | FixedString(N) | UIntX | IntX | EnumX | Array(T)|FloatX|Nested
--------|----------------|-------|------|-------|---------|------|------
+String | FixedString(N) | UIntX | IntX | EnumX | Array(T)|FloatX|Nested|Nullable|
+-------|----------------|-------|------|-------|---------|------|------|--------|
 
 What is not supported:
 1. Arrays of arrays
