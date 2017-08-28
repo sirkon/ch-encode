@@ -86,3 +86,13 @@ func (gg *GoGen) ArrayTestingTypeName(itemType generator.Field) string {
 func (gg *GoGen) NullableTestingTypeName(itemType generator.Field) string {
 	return "*" + itemType.TestingTypeName(gg)
 }
+
+// NullableStringTestingTypeName ...
+func (gg *GoGen) NullableStringTestingTypeName() string {
+	return "*string"
+}
+
+// NullableArrayTestingTypeName ...
+func (gg *GoGen) NullableArrayTestingTypeName(itemType generator.Field) string {
+	return gg.ArrayTestingTypeName(itemType)
+}

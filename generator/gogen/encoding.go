@@ -140,8 +140,36 @@ func (gg *GoGen) NullableEncoding(source string, field generator.Field) error {
 	if _, err := fmt.Fprintf(gg.dest, ";if %s != nil {\n", source); err != nil {
 		return err
 	}
+	if _, err := fmt.Fprintf(gg.dest, ";enc.buffer.WriteByte(byte(0));"); err != nil {
+		return err
+	}
 	if err := field.Encoding("*"+source, gg); err != nil {
 		return err
 	}
 	return gg.RawData("} else { enc.buffer.WriteByte(byte(1)) }")
+}
+
+// NullableArrayEncoding ...
+func (gg *GoGen) NullableArrayEncoding(source string, field generator.Field) error {
+	return gg.NullableEncoding(source, field)
+}
+
+// NullableStringEncoding
+func (gg *GoGen) NullableStringEncoding(source string) error {
+	if _, err := fmt.Fprintf(gg.dest, ";if %s != nil {\n", source); err != nil {
+		return err
+	}
+	_, err := fmt.Fprintf(gg.dest,
+		""+
+			"enc.buffer.WriteByte(byte(0));\n"+
+			"enc.buffer.Write(enc.helper.Uleb128(uint32(len([]byte(%s)))));\n"+
+			"enc.buffer.Write([]byte(%s));\n",
+		source, source)
+	if err != nil {
+		return err
+	}
+	if _, err := fmt.Fprintf(gg.dest, "; } else { enc.buffer.WriteByte(byte(1)) }"); err != nil {
+		return err
+	}
+	return nil
 }

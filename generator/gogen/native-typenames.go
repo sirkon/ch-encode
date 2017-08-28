@@ -71,3 +71,13 @@ func (gg *GoGen) ArrayNativeTypeName(itemType generator.Field) string {
 func (gg *GoGen) NullableNativeTypeName(itemType generator.Field) string {
 	return "*" + itemType.NativeTypeName(gg)
 }
+
+// NullableStringNativeTypeName ...
+func (gg *GoGen) NullableStringNativeTypeName() string {
+	return gg.StringNativeTypeName()
+}
+
+// NullableArrayNativeTypeName ...
+func (gg *GoGen) NullableArrayNativeTypeName(itemType generator.Field) string {
+	return gg.ArrayNativeTypeName(itemType)
+}

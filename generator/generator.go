@@ -79,6 +79,8 @@ type Generator interface {
 	FixedStringNativeTypeName() string
 	ArrayNativeTypeName(itemType Field) string
 	NullableNativeTypeName(itemType Field) string
+	NullableStringNativeTypeName() string
+	NullableArrayNativeTypeName(itemType Field) string
 
 	Int8TestingTypeName() string
 	Int16TestingTypeName() string
@@ -97,6 +99,8 @@ type Generator interface {
 	FixedStringTestingTypeName() string
 	ArrayTestingTypeName(itemType Field) string
 	NullableTestingTypeName(itemType Field) string
+	NullableStringTestingTypeName() string
+	NullableArrayTestingTypeName(itemType Field) string
 
 	Int8Encoding(string) error
 	Int16Encoding(string) error
@@ -114,6 +118,8 @@ type Generator interface {
 	FixedStringEncoding(string, int) error
 	ArrayEncoding(string, Field) error
 	NullableEncoding(string, Field) error
+	NullableArrayEncoding(string, Field) error
+	NullableStringEncoding(string) error
 
 	Int8TestEncoding(string) error
 	Int16TestEncoding(string) error
@@ -132,6 +138,8 @@ type Generator interface {
 	FixedStringTestEncoding(string, int) error
 	ArrayTestEncoding(string, Field) error
 	NullableTestEncoding(string, Field) error
+	NullableStringTestEncoding(string) error
+	NullableArrayTestEncoding(string, Field) error
 
 	EnumHelpers(Field, map[string]int) error
 	DateHelpers(Field) error

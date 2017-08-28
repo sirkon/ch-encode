@@ -167,3 +167,21 @@ func (gg *GoGen) NullableTestEncoding(source string, field generator.Field) erro
 	_, err := fmt.Fprintf(gg.dest, "(*%s)(%s),\n", field.TestingTypeName(gg), source)
 	return err
 }
+
+// NullableStringTestEncoding
+func (gg *GoGen) NullableStringTestEncoding(source string) error {
+	text :=
+		`
+	   func() *string {
+	       if %s == nil { return nil}
+	       res := string(%s)
+	       return &res
+	   }(),`
+	_, err := fmt.Fprintf(gg.dest, text, source, source)
+	return err
+}
+
+// NullableArrayTestEncoding
+func (gg *GoGen) NullableArrayTestEncoding(source string, field generator.Field) error {
+	return gg.NullableTestEncoding(source, field)
+}

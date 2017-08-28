@@ -44,7 +44,17 @@ func Meta2Field(meta FieldMeta) (field generator.Field) {
 	case "Array":
 		field = generator.NewArray(meta.Name, meta.Type, Meta2Field(*meta.Subtype))
 	case "Nullable":
-		field = generator.NewNullable(meta.Name, meta.Type, Meta2Field(*meta.Subtype))
+		if meta.Subtype == nil {
+			panic(fmt.Errorf("integrity error, nullable type must be nullable type of T, not just nullable"))
+		}
+		switch meta.Subtype.Type {
+		case "String":
+			field = generator.NewNullableString(meta.Name, meta.Type)
+		case "Array":
+			field = generator.NewNullableArray(meta.Name, meta.Type, Meta2Field(*meta.Subtype))
+		default:
+			field = generator.NewNullable(meta.Name, meta.Type, Meta2Field(*meta.Subtype))
+		}
 	default:
 		panic(fmt.Errorf("unsupported clickhouse type %s for field %s", meta.Type, meta.Name))
 	}
