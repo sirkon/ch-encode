@@ -33,7 +33,6 @@ func (gg *GoGen) EncoderDef(*generator.FieldSet) error {
 		`
         type {{.encoderName}} struct {
             insertCounter int
-            errorCounter int
          	buffer *bytes.Buffer
          	helper *binenc.Encoder
             zeroes []byte
@@ -53,9 +52,6 @@ func (gg *GoGen) EncoderDef(*generator.FieldSet) error {
 
         func (enc *{{.encoderName}}) InsertCount() int {
             return enc.insertCounter
-        }
-        func (enc *{{.encoderName}}) ErrorCount() int {
-            return enc.errorCounter;
         }
         `
 	tmpl, err := template.New("encoder").Parse(text)
@@ -88,7 +84,6 @@ func (gg *GoGen) EncodingMethod(fields *generator.FieldSet) (err error) {
 	err = gg.RawData(`
         enc.insertCounter++;
         _, err := enc.dest.Write(enc.buffer.Bytes());
-        if err != nil {enc.errorCounter++};
         return err}`)
 	return
 }
