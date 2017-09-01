@@ -4,6 +4,8 @@ import (
 	"fmt"
 	"text/template"
 
+	"io"
+
 	"github.com/sirkon/ch-encode/generator"
 )
 
@@ -140,7 +142,7 @@ func (gg *GoGen) NullableEncoding(source string, field generator.Field) error {
 	if _, err := fmt.Fprintf(gg.dest, ";if %s != nil {\n", source); err != nil {
 		return err
 	}
-	if _, err := fmt.Fprintf(gg.dest, ";enc.buffer.WriteByte(byte(0));"); err != nil {
+	if _, err := io.WriteString(gg.dest, ";enc.buffer.WriteByte(byte(0));"); err != nil {
 		return err
 	}
 	if err := field.Encoding("*"+source, gg); err != nil {
@@ -159,13 +161,11 @@ func (gg *GoGen) NullableStringEncoding(source string) error {
 	if _, err := fmt.Fprintf(gg.dest, ";if %s != nil {\n", source); err != nil {
 		return err
 	}
-	_, err := fmt.Fprintf(gg.dest,
-		""+
-			"enc.buffer.WriteByte(byte(0));\n"+
-			"enc.buffer.Write(enc.helper.Uleb128(uint32(len([]byte(%s)))));\n"+
-			"enc.buffer.Write([]byte(%s));\n",
-		source, source)
+	_, err := fmt.Fprintf(gg.dest, ""+"enc.buffer.WriteByte(byte(0));\n")
 	if err != nil {
+		return err
+	}
+	if err := gg.StringEncoding(source); err != nil {
 		return err
 	}
 	if _, err := fmt.Fprintf(gg.dest, "; } else { enc.buffer.WriteByte(byte(1)) }"); err != nil {
