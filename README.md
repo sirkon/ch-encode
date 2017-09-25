@@ -22,7 +22,7 @@ function call output which represents a table record must not be splitted)
 
 ## Bonuses
 * Testing mock objects can be generated as well.
-* It is fast as it avoids any allocation in a process and RawBinary is a the easiest format after Native for the Clickhouse and practically the fastest method of insertion via standalone tools.
+* It is fast as it avoids any allocation in a process and RawBinary should be the easiest format (I don't know exactly though) after Native for the Clickhouse.
 
 
 # How to use
