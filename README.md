@@ -58,68 +58,47 @@ Example.
     ```
     test directory will appear in current directory, it will have two go files, test.go and test_test.go.
     this is **test** package. Move it into src to be seen by **go install**
- 4. Now, some code
+ 4. Get [ch-insert](https://github.com/sirkon/ch-insert) package:
+    ```
+    go get -u github.com/sirkon/ch-insert
+    ```
+ 5. Now, some code
     ```go
+    // file main.go
     package main
      
     import (
-     	"bytes"
-     	"errors"
-     	"io/ioutil"
      	"net/http"
      	"test"
      	"time"
+     
+     	chinsert "github.com/sirkon/ch-insert"
     )
      
-    // inserter will implement io.Writer
-    type inserter struct{}
-     
-    // Write implementation for inserter, it will just insert everything it got into clickhouse table `test` as RowBinary data
-    func (i inserter) Write(p []byte) (n int, err error) {
-     	client := &http.Client{}
-     	request, err := http.NewRequest("POST", "http://localhost:8123", bytes.NewBuffer(p))
-     	if err != nil {
-     		return -1, err
-     	}
-     	q := request.URL.Query()
-     	q.Set("query", "INSERT INTO test FORMAT RowBinary")
-     	request.URL.RawQuery = q.Encode()
-     
-     	resp, err := client.Do(request)
-     	if err != nil {
-     		return -1, err
-     	}
-     	defer resp.Body.Close()
-     	data, err := ioutil.ReadAll(resp.Body)
-     	if err != nil {
-     		return -1, err
-     	}
-     	if resp.StatusCode != http.StatusOK {
-     		return -1, errors.New(string(data))
-     	}
-     	return len(p), nil
-    }
-     
     func main() {
-     	e := test.NewTestRawEncoder(inserter{})
-     	date := time.Date(2006, 1, 2, 3, 4, 5, 0, time.UTC)
-     	err := e.Encode(
-     		test.Date.FromTime(date),
-     		test.UID("123123"),
-     		test.Hidden(1))
-     	if err != nil {
+     	rawInserter := chinsert.NewCHInsert(
+     		&http.Client{},		   // HTTP client is defined explicitly in order to utilize
+     					   // stdlib provided feautures such as proxy support if needed
+     		chinsert.ConnParams{	   // clickhouse connection parameters
+     			Host: "localhost",
+     			Port: 8123,
+     		},
+     		"test",			   // table name
+     	)
+     
+     	inserter := chinsert.NewBufInsert(rawInserter, 10*1024*1024)
+     	defer inserter.Close()
+     	encoder := test.NewTestRawEncoder(inserter)
+     	if err := encoder.Encode(test.Date.FromTime(time.Now()), test.UID("123"), test.Hidden(1)); err != nil {
      		panic(err)
      	}
-     	err = e.Encode(
-     		test.Date.FromTime(date),
-     		test.UID("321321"),
-     		test.Hidden(0))
-     	if err != nil {
+     	if err := encoder.Encode(test.Date.FromTime(time.Now()), test.UID("123"), test.Hidden(0)); err != nil {
      		panic(err)
      	}
     }
+
     ```
-5. See test table now
+6. See test table now
 
     ![Screenshot](screenshot.png)
     
