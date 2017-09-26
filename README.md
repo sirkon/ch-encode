@@ -170,4 +170,4 @@ this program will output
 ]
 ```
 Good for testing, you see. 
-DateTime type will be represented as %Y-%m-%dT%H:%M:%S string, enums will be represented as their text values. Other clickhouse types match directly into Golang equivalents (Int16 -> int16, Float64 -> float64, UInt32 -> uint32, nullables as pointers to types except `Nullable(Array(T))` which are represented as regular `[]τ` slices, etc)
+DateTime type will be represented as `%Y-%m-%dT%H:%M:%S` string, enums will be represented as their text values. Other clickhouse types match directly into Golang equivalents (Int16 -> int16, Float64 -> float64, UInt32 -> uint32, nullables as pointers to types except `Nullable(Array(T))` which are represented as regular `[]τ` slices, etc)
