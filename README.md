@@ -76,7 +76,7 @@ Example.
     )
      
     func main() {
-     	rawInserter := chinsert.NewCHInsert(
+     	rawInserter := chinsert.New(
      		&http.Client{},		   // HTTP client is defined explicitly in order to utilize
      					   // stdlib provided feautures such as proxy support if needed
      		chinsert.ConnParams{	   // clickhouse connection parameters
@@ -86,7 +86,7 @@ Example.
      		"test",			   // table name
      	)
      
-     	inserter := chinsert.NewBufInsert(rawInserter, 10*1024*1024)
+     	inserter := chinsert.NewBuf(rawInserter, 10*1024*1024)
      	defer inserter.Close()
      	encoder := test.NewTestRawEncoder(inserter)
      	if err := encoder.Encode(test.Date.FromTime(time.Now()), test.UID("123"), test.Hidden(1)); err != nil {
