@@ -27,6 +27,11 @@ func main() {
 			Value: "",
 			Usage: "JSON-formatted gotifying dictionary",
 		},
+		cli.StringFlag{ // This is ugly solution for the lack of requirement flag
+			Name:  "date-field",
+			Value: "date",
+			Usage: "Field name to filter by a day",
+		},
 	}
 	app.Action = action
 	app.Run(os.Args)

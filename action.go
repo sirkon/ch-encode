@@ -47,6 +47,7 @@ func action(c *cli.Context) error {
 	isTesting := c.Bool("test")
 	yamlDict := c.String("yaml-dict")
 	jsonDict := c.String("json-dict")
+	dateField := c.String("date-field")
 	if len(yamlDict) > 0 && len(jsonDict) > 0 {
 		message.Criticalf("Choose one dictionary (--yaml-dict or --json-dict)")
 	}
@@ -75,11 +76,16 @@ func action(c *cli.Context) error {
 		partWriter := &bytes.Buffer{}
 		gen := gogen.New(table, goish, partWriter)
 		fields := generator.NewFieldSet(gen)
+		dateArg := func(gen generator.Generator) string { return "" }
 		for _, meta := range metas {
-			fields.Add(chstuff.Meta2Field(meta))
+			fieldInfo := chstuff.Meta2Field(meta)
+			if meta.Name == dateField {
+				dateArg = func(gen generator.Generator) string { return fieldInfo.ArgName(gen) }
+			}
+			fields.Add(fieldInfo)
 		}
 
-		if err = generator.Generate(gen, fields); err != nil {
+		if err = generator.Generate(gen, dateArg, fields); err != nil {
 			message.Critical(err)
 		}
 		writer := &bytes.Buffer{}

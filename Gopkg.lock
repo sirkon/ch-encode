@@ -11,13 +11,13 @@
   branch = "v2"
   name = "github.com/go-yaml/yaml"
   packages = ["."]
-  revision = "25c4ec802a7d637f88d584ab26798e94ad14c13b"
+  revision = "eb3733d160e74a9c7e442f435eb3bea458e1d19f"
 
 [[projects]]
   branch = "master"
   name = "github.com/mailru/go-clickhouse"
   packages = ["."]
-  revision = "d5fa5060d191bfdc5da635c58f2ef68fe56d34c2"
+  revision = "c63aa778d69b6ba656a9d1eb3e3ec577aee33188"
 
 [[projects]]
   name = "github.com/pmezard/go-difflib"
@@ -40,8 +40,8 @@
 [[projects]]
   name = "github.com/sirkon/gosrcfmt"
   packages = ["."]
-  revision = "0a0058817305d572688a1021db8fd45dd83d8cf7"
-  version = "v1.0"
+  revision = "77b0280a0ff2514a7401e83f8c4bbd1d34a35b5b"
+  version = "1.5"
 
 [[projects]]
   name = "github.com/sirkon/gotify"
@@ -64,12 +64,12 @@
 [[projects]]
   name = "github.com/urfave/cli"
   packages = ["."]
-  revision = "0bdeddeeb0f650497d603c4ad7b20cfe685682f6"
-  version = "v1.19.1"
+  revision = "cfb38830724cc34fedffe9a2a29fb54fa9169cd1"
+  version = "v1.20.0"
 
 [solve-meta]
   analyzer-name = "dep"
   analyzer-version = 1
-  inputs-digest = "77f3e69075513e61040df5e8000343732f3f2437dccd915454fdc2e9bdc3481b"
+  inputs-digest = "d2db574728324111f5aaa9c1c78d1391b3b76edeff74f2eb68ec270857701aea"
   solver-name = "gps-cdcl"
   solver-version = 1

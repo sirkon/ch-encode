@@ -8,7 +8,7 @@ import (
 
 // VoidEncoderDef ...
 func (gg *GoGen) VoidEncoderDef(*generator.FieldSet) error {
-	_, err := fmt.Fprintf(gg.dest, "type %s bool\n", gg.voidEncoderName())
+	_, err := fmt.Fprintf(gg.dest, "\ntype %s bool\n", gg.voidEncoderName())
 	return err
 }
 

@@ -34,10 +34,10 @@ type Generator interface {
 	////////////// Production date filter
 
 	// FilterEncoderDef generates encoder with filter
-	FilterEncoderDef(*FieldSet) error
+	DateFilterEncoderDef(*FieldSet) error
 
 	// FilterEncodingMethod generates
-	FilterEncodingMethod(*FieldSet) error
+	DateFilterEncodingMethod(dateField string, fset *FieldSet) error
 
 	////////////////////////////////////
 	////////////// Void purposes

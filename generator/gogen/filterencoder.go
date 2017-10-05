@@ -7,8 +7,8 @@ import (
 	"github.com/sirkon/ch-encode/generator"
 )
 
-// FilterEncoderDef ...
-func (gg *GoGen) FilterEncoderDef(field *generator.FieldSet) error {
+// DateFilterEncoderDef ...
+func (gg *GoGen) DateFilterEncoderDef(field *generator.FieldSet) error {
 	text :=
 		`
 		type {{.encoder}} struct {
@@ -40,12 +40,12 @@ func (gg *GoGen) FilterEncoderDef(field *generator.FieldSet) error {
 	})
 }
 
-// FilterEncodingMethod ...
-func (gg *GoGen) FilterEncodingMethod(fields *generator.FieldSet) error {
+// DateFilterEncodingMethod ...
+func (gg *GoGen) DateFilterEncodingMethod(dateArg string, fields *generator.FieldSet) error {
 	text :=
 		`
         func (enc *{{.encoder}}) Encode({{.args}}) error {
-            if enc.dayNo != uint16(date) {
+            if enc.dayNo != uint16({{.dateArg}}) {
                 return nil
             }
             return enc.encoder.Encode({{.app}})
@@ -63,5 +63,6 @@ func (gg *GoGen) FilterEncodingMethod(fields *generator.FieldSet) error {
 		"encoder": gg.filterEncoderName(),
 		"args":    gg.argList(fields),
 		"app":     strings.Join(app, ", "),
+		"dateArg": dateArg,
 	})
 }
