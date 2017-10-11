@@ -127,10 +127,10 @@ We saw how the TestRawEncoder works. Bother TestRawEncoderDateFilter and TestRaw
 package main
 
 import (
-	"encoding/json"
-	"fmt"
 	"test"
 	"time"
+
+	"github.com/sanity-io/litter"
 )
 
 func main() {
@@ -150,24 +150,25 @@ func main() {
 	if err != nil {
 		panic(err)
 	}
-	data, _ := json.MarshalIndent(e.Result, "", "    ")
-	fmt.Println(string(data))
+
+	litter.Dump(e.Result)
 }
+
 ```
 this program will output
-```json
-[
-    {
-        "Date": "2006-01-02",
-        "UID": "123123",
-        "Hidden": 1
-    },
-    {
-        "Date": "2006-01-02",
-        "UID": "321321",
-        "Hidden": 0
-    }
-]
+```go
+[]test.TestingTestResult{
+  test.TestingTestResult{
+    Date: "2006-01-02",
+    UID: "123123",
+    Hidden: 1,
+  },
+  test.TestingTestResult{
+    Date: "2006-01-02",
+    UID: "321321",
+    Hidden: 0,
+  },
+}
 ```
 Good for testing, you see. 
 DateTime type will be represented as `%Y-%m-%dT%H:%M:%S` string, enums will be represented as their text values. Other clickhouse types match directly into Golang equivalents (Int16 -> int16, Float64 -> float64, UInt32 -> uint32, nullables as pointers to types except `Nullable(Array(T))` which are represented as regular `[]τ` slices, etc)
