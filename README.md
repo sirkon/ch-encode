@@ -8,6 +8,8 @@ String | FixedString(N) | UIntX | IntX | EnumX | Array(T)|FloatX|Nested<sup>*</s
 nested declaration they are represented as ordinary fields with dotted names (`[nested name].[subfield name]`) with DB level
 constraint on these fields (what are ordinary arrays of subfield's types) having the same length. We did the same: there's encoder level control implemented for Raw and Testing encoders for these arrays' length. There's no syntactic level grouping for them.
 
+This piece is for record data generation only. See https://github.com/sirkon/ch-insert for actual data insert
+
 ## The problem
 * Tables can be wide and thus generating proper INSERT statements is a source of errors itself.
 * Proper data buffering on INSERT statements is a bit tricky
@@ -76,7 +78,7 @@ Example.
     )
      
     func main() {
-     	rawInserter := chinsert.New(
+     	inserter := chinsert.New(
      		&http.Client{},		   // HTTP client is defined explicitly in order to utilize
      					   // stdlib provided feautures such as proxy support if needed
      		chinsert.ConnParams{	   // clickhouse connection parameters
@@ -86,8 +88,6 @@ Example.
      		"test",			   // table name
      	)
      
-     	inserter := chinsert.NewBuf(rawInserter, 10*1024*1024)
-     	defer inserter.Close()
      	encoder := test.NewTestRawEncoder(inserter)
      	if err := encoder.Encode(test.Date.FromTime(time.Now()), test.UID("123"), test.Hidden(1)); err != nil {
      		panic(err)
