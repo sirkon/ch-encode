@@ -1,4 +1,6 @@
 # ch-encode
+[![Build Status](https://travis-ci.org/sirkon/ch-encode.svg?branch=master)](https://travis-ci.org/sirkon/ch-encode)
+
 Clickhouse typesafe RowBinary insert data encoder generator for Go. Supported types:
 
 String | FixedString(N) | UIntX | IntX | EnumX | Array(T)|FloatX|Nested<sup>*</sup>|Nullable(T)|
