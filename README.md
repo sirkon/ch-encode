@@ -80,15 +80,11 @@ Example.
     )
      
     func main() {
-     	inserter := chinsert.New(
-     		&http.Client{},		   // HTTP client is defined explicitly in order to utilize
-     					   // stdlib provided feautures such as proxy support if needed
-     		chinsert.ConnParams{	   // clickhouse connection parameters
-     			Host: "localhost",
-     			Port: 8123,
-     		},
-     		"test",			   // table name
-     	)
+     	inserter, err := chinsert.Open("localhost:8123/default", "test", 10*1024*1024, 1024*1024*1024)
+     	if err != nil {
+     		panic(err)
+     	}
+     	defer inserter.Close()
      
      	encoder := test.NewTestRawEncoder(inserter)
      	if err := encoder.Encode(test.Date.FromTime(time.Now()), test.UID("123"), test.Hidden(1)); err != nil {
