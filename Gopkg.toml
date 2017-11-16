@@ -56,7 +56,3 @@
 [[constraint]]
   name = "github.com/urfave/cli"
   version = "1.19.1"
-
-[[constraint]]
-  branch = "master"
-  name = "github.com/sg3des/argum"

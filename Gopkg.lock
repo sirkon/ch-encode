@@ -26,12 +26,6 @@
   version = "v1.0.0"
 
 [[projects]]
-  branch = "master"
-  name = "github.com/sg3des/argum"
-  packages = ["."]
-  revision = "ed78b2e87a1a3c728c6b52ca05e7ccb6c89ddfde"
-
-[[projects]]
   name = "github.com/sirkon/binenc"
   packages = ["."]
   revision = "69993b983821f04009b7fd317e23ffe267cf736f"
@@ -76,6 +70,6 @@
 [solve-meta]
   analyzer-name = "dep"
   analyzer-version = 1
-  inputs-digest = "7d865b8c0b97089723d2e17fed62c11a59dacd53c59d51624c825abae4ea9ba6"
+  inputs-digest = "d2db574728324111f5aaa9c1c78d1391b3b76edeff74f2eb68ec270857701aea"
   solver-name = "gps-cdcl"
   solver-version = 1
