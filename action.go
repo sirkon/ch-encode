@@ -16,7 +16,6 @@ import (
 	"github.com/sirkon/gosrcfmt"
 	"github.com/sirkon/gotify"
 	"github.com/sirkon/message"
-	"github.com/urfave/cli"
 )
 
 func yamlSource(path string) map[string]string {
@@ -43,14 +42,7 @@ func jsonSource(path string) map[string]string {
 	return res
 }
 
-func action(c *cli.Context) error {
-	isTesting := c.Bool("test")
-	yamlDict := c.String("yaml-dict")
-	jsonDict := c.String("json-dict")
-	dateField := c.String("date-field")
-	if len(yamlDict) > 0 && len(jsonDict) > 0 {
-		message.Criticalf("Choose one dictionary (--yaml-dict or --json-dict)")
-	}
+func action(isTesting bool, yamlDict string, jsonDict string, dateField string, tables []string) error {
 	var dict map[string]string
 	if len(yamlDict) > 0 {
 		dict = yamlSource(yamlDict)
@@ -67,7 +59,7 @@ func action(c *cli.Context) error {
 		panic(err)
 	}
 
-	for _, table := range c.Args() {
+	for _, table := range tables {
 		metas, err := chstuff.RetrieveTableMeta(connect, table)
 		if err != nil {
 			message.Critical(err)
