@@ -3,11 +3,16 @@ package main
 import (
 	"os"
 
-	"github.com/docopt/docopt-go"
+	"github.com/docopt/docopt.go"
 	_ "github.com/mailru/go-clickhouse" // Mail.RU's clickhouse connector
 	_ "github.com/sirkon/binenc"        // Binary encoding library go get's "dependency", generated package will need it
 	_ "github.com/sirkon/go-diff"       // Diff for testing
 	"github.com/sirkon/message"
+)
+
+
+const (
+	version = "2.2"
 )
 
 func main() {
@@ -26,7 +31,7 @@ Options:
   --json-dict <src>         Use this JSON formatted dictionary to generate Goish names
   --date-field <date field> Use this field as date
 `
-	arguments, err := docopt.Parse(usage, os.Args[1:], true, version, true)
+	arguments, err := docopt.ParseArgs(usage, os.Args[1:], version)
 	if err != nil {
 		message.Fatal(err)
 	}
