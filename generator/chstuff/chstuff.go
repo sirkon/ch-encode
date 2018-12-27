@@ -59,18 +59,16 @@ func retreiveField(name, ftype string) (meta FieldMeta, err error) {
 
 // RetrieveTableMeta retrieves clickhouse table metainformation
 func RetrieveTableMeta(conn *sql.DB, table string) (res []FieldMeta, err error) {
-	rows, err := conn.Query("DESC " + table)
+	rows, err := conn.Query("SELECT name, type FROM system.columns WHERE table = ?", table)
 	if err != nil {
 		return
 	}
 
 	var fieldName string
 	var fieldType string
-	var fieldDefaultType string
-	var fieldDefaultValue string
 
 	for rows.Next() {
-		if err := rows.Scan(&fieldName, &fieldType, &fieldDefaultType, &fieldDefaultValue); err != nil {
+		if err := rows.Scan(&fieldName, &fieldType); err != nil {
 			return res, err
 		}
 		meta, err := retreiveField(fieldName, fieldType)
