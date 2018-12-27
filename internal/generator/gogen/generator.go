@@ -5,7 +5,7 @@ import (
 	"io"
 	"text/template"
 
-	"github.com/sirkon/ch-encode/generator"
+	"github.com/sirkon/ch-encode/internal/generator"
 	"github.com/sirkon/gotify"
 )
 

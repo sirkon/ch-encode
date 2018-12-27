@@ -6,7 +6,7 @@ import (
 
 	"io"
 
-	"github.com/sirkon/ch-encode/generator"
+	"github.com/sirkon/ch-encode/internal/generator"
 )
 
 // Int8Encoding ...

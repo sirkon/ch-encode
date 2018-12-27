@@ -1,6 +1,8 @@
 package gogen
 
-import "github.com/sirkon/ch-encode/generator"
+import (
+	"github.com/sirkon/ch-encode/internal/generator"
+)
 
 // Int8NativeTypeName ...
 func (gg *GoGen) Int8NativeTypeName() string {

@@ -1,6 +1,8 @@
 package gogen
 
-import "github.com/sirkon/ch-encode/generator"
+import (
+	"github.com/sirkon/ch-encode/internal/generator"
+)
 
 // Int8TestingTypeName ...
 func (gg *GoGen) Int8TestingTypeName() string {

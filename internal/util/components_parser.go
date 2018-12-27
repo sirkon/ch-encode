@@ -2,6 +2,7 @@
 * THE FILE WAS GENERATED WITH logparsergen --source=testingch.script --package=util
 * DO NOT TOUCH IT!
  */
+
 package util
 
 import (

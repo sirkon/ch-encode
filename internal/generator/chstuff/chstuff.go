@@ -4,6 +4,8 @@ import (
 	"database/sql"
 	"strconv"
 	"strings"
+
+	"github.com/sirkon/ch-encode/internal/util"
 )
 
 // FieldMeta field description
@@ -12,10 +14,16 @@ type FieldMeta struct {
 	Type           string
 	EnumData       map[string]int
 	FixedStringLen int
-	Subtype        *FieldMeta
+	Decimal        struct {
+		Bits      int // разрядность в битах для данного Decimal
+		Precision int // количество цифр в записи числа
+		Scale     int // количество цифр в дробной части
+	}
+	Subtype *FieldMeta
 }
 
 func retreiveField(name, ftype string) (meta FieldMeta, err error) {
+	decExtractor := util.Extractor{}
 	meta.Name = name
 	if strings.HasPrefix(ftype, "Enum8(") && strings.HasSuffix(ftype, ")") {
 		meta.Type = "Enum8"
@@ -51,6 +59,21 @@ func retreiveField(name, ftype string) (meta FieldMeta, err error) {
 			return meta, err
 		}
 		meta.Subtype = &submeta
+	} else if ok, _ := decExtractor.Extract(ftype); ok {
+		meta.Type = "Decimal"
+		meta.Decimal.Precision = decExtractor.Precision
+		meta.Decimal.Scale = decExtractor.Scale
+		switch {
+		case decExtractor.Precision <= 9:
+			meta.Decimal.Bits = 32
+			meta.Type += "32"
+		case decExtractor.Precision <= 18:
+			meta.Decimal.Bits = 64
+			meta.Type += "64"
+		case decExtractor.Precision <= 38:
+			meta.Decimal.Bits = 128
+			meta.Type += "128"
+		}
 	} else {
 		meta.Type = ftype
 	}

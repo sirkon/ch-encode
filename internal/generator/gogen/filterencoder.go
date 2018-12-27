@@ -4,7 +4,7 @@ import (
 	"strings"
 	"text/template"
 
-	"github.com/sirkon/ch-encode/generator"
+	"github.com/sirkon/ch-encode/internal/generator"
 )
 
 // DateFilterEncoderDef ...
