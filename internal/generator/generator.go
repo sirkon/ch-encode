@@ -73,6 +73,7 @@ type Generator interface {
 	Uint16NativeTypeName() string
 	Uint32NativeTypeName() string
 	Uint64NativeTypeName() string
+	Dec128NativeTypeName() string
 	Float32NativeTypeName() string
 	Float64NativeTypeName() string
 	StringNativeTypeName() string
@@ -90,6 +91,9 @@ type Generator interface {
 	Uint16TestingTypeName() string
 	Uint32TestingTypeName() string
 	Uint64TestingTypeName() string
+	Dec32TestingTypeName() string
+	Dec64TestingTypeName() string
+	Dec128TestingTypeName() string
 	Float32TestingTypeName() string
 	Float64TestingTypeName() string
 	EnumTestingTypeName() string
@@ -110,6 +114,7 @@ type Generator interface {
 	Uint16Encoding(string) error
 	Uint32Encoding(string) error
 	Uint64Encoding(string) error
+	Dec128Encoding(string) error
 	Float32Encoding(string) error
 	Float64Encoding(string) error
 	DateEncoding(string) error
@@ -129,6 +134,9 @@ type Generator interface {
 	Uint16TestEncoding(string) error
 	Uint32TestEncoding(string) error
 	Uint64TestEncoding(string) error
+	Dec32TestEncoding(int, string) error
+	Dec64TestEncoding(int, string) error
+	Dec128TestEncoding(int, string) error
 	Float32TestEncoding(string) error
 	Float64TestEncoding(string) error
 	EnumTestEncoding(string, map[string]int) error
@@ -144,4 +152,5 @@ type Generator interface {
 	EnumHelpers(Field, map[string]int) error
 	DateHelpers(Field) error
 	DateTimeHelpers(Field) error
+	Dec128Helpers(Field) error
 }

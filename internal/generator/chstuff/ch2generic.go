@@ -3,7 +3,7 @@ package chstuff
 import (
 	"fmt"
 
-	"github.com/sirkon/ch-encode/generator"
+	"github.com/sirkon/ch-encode/internal/generator"
 )
 
 // Meta2Field translates clickhouse field metainfo into generator Field object
@@ -55,6 +55,12 @@ func Meta2Field(meta FieldMeta) (field generator.Field) {
 		default:
 			field = generator.NewNullable(meta.Name, meta.Type, Meta2Field(*meta.Subtype))
 		}
+	case "Decimal32":
+		field = generator.NewDecimal32(meta.Name, meta.Type, meta.Decimal.Precision, meta.Decimal.Scale)
+	case "Decimal64":
+		field = generator.NewDecimal64(meta.Name, meta.Type, meta.Decimal.Precision, meta.Decimal.Scale)
+	case "Decimal128":
+		field = generator.NewDecimal128(meta.Name, meta.Type, meta.Decimal.Precision, meta.Decimal.Scale)
 	default:
 		panic(fmt.Errorf("unsupported clickhouse type %s for field %s", meta.Type, meta.Name))
 	}

@@ -6,7 +6,7 @@ import (
 
 	"io"
 
-	"github.com/sirkon/ch-encode/generator"
+	"github.com/sirkon/ch-encode/internal/generator"
 )
 
 // Int8Encoding ...
@@ -54,6 +54,15 @@ func (gg *GoGen) Uint32Encoding(source string) error {
 // Uint64Encoding ...
 func (gg *GoGen) Uint64Encoding(source string) error {
 	_, err := fmt.Fprintf(gg.dest, "enc.buffer.Write(enc.helper.Uint64(uint64(%s)));\n", source)
+	return err
+}
+
+func (gg *GoGen) Dec128Encoding(source string) error {
+	_, err := fmt.Fprintf(gg.dest,
+		""+
+			"enc.buffer.Write(enc.helper.Uint64(uint64(%s.Lo)));\n"+
+			"enc.buffer.Write(enc.helper.Uint64(uint64(%s.Hi)));\n",
+		source, source)
 	return err
 }
 

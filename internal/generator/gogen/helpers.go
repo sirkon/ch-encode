@@ -4,8 +4,9 @@ import (
 	"fmt"
 	"sort"
 	"strings"
+	"text/template"
 
-	"github.com/sirkon/ch-encode/generator"
+	"github.com/sirkon/ch-encode/internal/generator"
 )
 
 // EnumHelpers ...
@@ -48,7 +49,7 @@ func (gg *GoGen) EnumHelpers(field generator.Field, safeValues map[string]int) e
 func (gg *GoGen) DateHelpers(field generator.Field) error {
 	gg.useTime()
 	lines := []string{
-		fmt.Sprintf("type compl%s bool", field.TypeName(gg)),
+		fmt.Sprintf("type compl%s struct{}", field.TypeName(gg)),
 		fmt.Sprintf(`
         func (c compl%s) FromTime(t stdtime.Time) %s {
             return %s(t.Unix()/86400)
@@ -59,7 +60,7 @@ func (gg *GoGen) DateHelpers(field generator.Field) error {
         `,
 			field.TypeName(gg), field.TypeName(gg), field.TypeName(gg),
 			field.TypeName(gg), field.TypeName(gg), field.TypeName(gg)),
-		fmt.Sprintf("var %s compl%s = compl%s(true)", field.AccessName(gg), field.TypeName(gg), field.TypeName(gg)),
+		fmt.Sprintf("var %s compl%s", field.AccessName(gg), field.TypeName(gg)),
 	}
 	return gg.RawData(strings.Join(lines, "\n"))
 }
@@ -68,7 +69,7 @@ func (gg *GoGen) DateHelpers(field generator.Field) error {
 func (gg *GoGen) DateTimeHelpers(field generator.Field) error {
 	gg.useTime()
 	lines := []string{
-		fmt.Sprintf("type compl%s bool", field.TypeName(gg)),
+		fmt.Sprintf("type compl%s struct{}", field.TypeName(gg)),
 		fmt.Sprintf(`
         func (c compl%s) FromTime(t stdtime.Time) %s {
             return %s(t.Unix())
@@ -82,5 +83,34 @@ func (gg *GoGen) DateTimeHelpers(field generator.Field) error {
 		fmt.Sprintf("var %s compl%s = compl%s(true)", field.AccessName(gg), field.TypeName(gg), field.TypeName(gg)),
 	}
 	return gg.RawData(strings.Join(lines, "\n"))
+}
 
+// Dec128Helpers ...
+func (gg *GoGen) Dec128Helpers(field generator.Field) error {
+	format := `
+	func {{.FuncName}}(lo, hi uint64) {{.TypeName}} {
+		return {{.TypeName}}{
+			Lo: lo,
+			Hi: hi,
+		}
+	}
+
+	func {{.FuncName}}Struct(item struct {Lo uint64; Hi uint64}) {{.TypeName}} {
+		return {{.TypeName}}{
+			Lo: item.Lo,
+			Hi: item.Hi,
+		}
+	}
+	`
+
+	gen := template.New("test")
+	gen, err := gen.Parse(format)
+	if err != nil {
+		panic("failed to parse template: " + err.Error())
+	}
+	err = gen.Execute(gg.dest, map[string]string{
+		"FuncName": gg.EasyTypeName(field.AccessName(gg)),
+		"TypeName": gg.UneasyTypeName(field.AccessName(gg)),
+	})
+	return err
 }

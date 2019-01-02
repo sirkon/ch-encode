@@ -9,10 +9,12 @@ import (
 	"os"
 
 	"github.com/go-yaml/yaml"
-	"github.com/sirkon/ch-encode/generator"
-	"github.com/sirkon/ch-encode/generator/chstuff"
-	"github.com/sirkon/ch-encode/generator/gogen"
-	"github.com/sirkon/ch-encode/util"
+
+	"github.com/sirkon/ch-encode/internal/generator"
+	"github.com/sirkon/ch-encode/internal/generator/chstuff"
+	"github.com/sirkon/ch-encode/internal/generator/gogen"
+	util2 "github.com/sirkon/ch-encode/util"
+
 	"github.com/sirkon/gosrcfmt"
 	"github.com/sirkon/gotify"
 	"github.com/sirkon/message"
@@ -53,7 +55,7 @@ func action(isTesting bool, yamlDict string, jsonDict string, dateField string, 
 
 	goish := gotify.New(dict)
 
-	prms := util.EnvCHParams()
+	prms := util2.EnvCHParams()
 	connect, err := sql.Open("clickhouse", prms.DBURL())
 	if err != nil {
 		panic(err)

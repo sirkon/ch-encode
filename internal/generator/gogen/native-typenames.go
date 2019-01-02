@@ -1,10 +1,12 @@
 package gogen
 
-import "github.com/sirkon/ch-encode/generator"
+import (
+	"github.com/sirkon/ch-encode/internal/generator"
+)
 
 // Int8NativeTypeName ...
 func (gg *GoGen) Int8NativeTypeName() string {
-	return "byte"
+	return "int8"
 }
 
 // Int16NativeTypeName ...
@@ -40,6 +42,14 @@ func (gg *GoGen) Uint32NativeTypeName() string {
 // Uint64NativeTypeName ...
 func (gg *GoGen) Uint64NativeTypeName() string {
 	return "uint64"
+}
+
+// Dec128NativeTypeName ...
+func (gg *GoGen) Dec128NativeTypeName() string {
+	return `struct {
+			Lo uint64
+			Hi uint64
+		}`
 }
 
 // Float32NativeTypeName ...

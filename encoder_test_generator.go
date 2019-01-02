@@ -8,7 +8,7 @@ import (
 	"strings"
 	"text/template"
 
-	"github.com/sirkon/ch-encode/util"
+	"github.com/sirkon/ch-encode/internal/util"
 	"github.com/sirkon/gosrcfmt"
 )
 

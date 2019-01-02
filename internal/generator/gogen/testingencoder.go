@@ -4,7 +4,7 @@ import (
 	"fmt"
 	"text/template"
 
-	"github.com/sirkon/ch-encode/generator"
+	"github.com/sirkon/ch-encode/internal/generator"
 )
 
 // TestDef ...

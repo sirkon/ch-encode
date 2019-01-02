@@ -10,7 +10,6 @@ import (
 	"github.com/sirkon/message"
 )
 
-
 const (
 	version = "2.2"
 )
