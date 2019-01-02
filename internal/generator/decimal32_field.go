@@ -41,13 +41,13 @@ func (d *Decimal32) Encoding(source string, gen Generator) error {
 }
 
 func (d *Decimal32) Helper(gen Generator) error {
-	panic("implement me")
+	return nil
 }
 
 func (d *Decimal32) TestingTypeName(gen Generator) string {
-	panic("implement me")
+	return gen.Dec32TestingTypeName()
 }
 
 func (d *Decimal32) TestEncoding(source string, gen Generator) error {
-	panic("implement me")
+	return gen.Dec32TestEncoding(d.scale, source)
 }

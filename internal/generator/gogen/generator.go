@@ -9,6 +9,8 @@ import (
 	"github.com/sirkon/gotify"
 )
 
+var _ generator.Generator = &GoGen{}
+
 // GoGen encoder code generation for Go language
 type GoGen struct {
 	goish   *gotify.Gotify
@@ -38,41 +40,42 @@ func (gg *GoGen) RawData(v string) error {
 }
 
 // regImport registers new import path
-func (gg *GoGen) regImport(path, access string) {
+func (gg *GoGen) regImport(importAs string, path string) {
 	if prev, ok := gg.imports[path]; ok {
-		if prev != access {
-			panic(fmt.Errorf(`attempt to import path "%s" as %s, when it was registered before as %s`, path, access, prev))
+		if prev != importAs {
+			panic(fmt.Errorf(`attempt to import path "%s" as %s, when it was registered before as %s`, path, importAs, prev))
 		}
 	}
-	gg.imports[path] = access
+	gg.imports[path] = importAs
 }
 
 func (gg *GoGen) useTime() {
-	gg.regImport("time", "stdtime")
+	gg.regImport("stdtime", "time")
 }
 
 func (gg *GoGen) useBinEnc() {
-	gg.regImport("github.com/sirkon/binenc", "")
+	gg.regImport("", "github.com/sirkon/binenc")
 }
 
 func (gg *GoGen) useBytes() {
-	gg.regImport("bytes", "")
+	gg.regImport("", "bytes")
 }
 
 func (gg *GoGen) useIO() {
-	gg.regImport("io", "")
+	gg.regImport("", "io")
 }
 
 func (gg *GoGen) useUnsafe() {
-	gg.regImport("unsafe", "")
+	gg.regImport("", "unsafe")
 }
 
 func (gg *GoGen) useFmt() {
-	gg.regImport("fmt", "")
+	gg.regImport("", "fmt")
 }
 
 const headerTemplate = `
 package {{ .Package }}
+
 
 import (
     {{ range $path, $access := .Imports }}{{ $access }} "{{ $path }}" {{ printf "\n" }}{{ end }})

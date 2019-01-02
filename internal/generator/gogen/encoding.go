@@ -57,6 +57,15 @@ func (gg *GoGen) Uint64Encoding(source string) error {
 	return err
 }
 
+func (gg *GoGen) Dec128Encoding(source string) error {
+	_, err := fmt.Fprintf(gg.dest,
+		""+
+			"enc.buffer.Write(enc.helper.Uint64(uint64(%s.Lo)));\n"+
+			"enc.buffer.Write(enc.helper.Uint64(uint64(%s.Hi)));\n",
+		source, source)
+	return err
+}
+
 // Float32Encoding ...
 func (gg *GoGen) Float32Encoding(source string) error {
 	gg.useUnsafe()

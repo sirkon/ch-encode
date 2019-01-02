@@ -21,7 +21,7 @@ func (d *Decimal128) FieldTypeName(gen Generator) string {
 }
 
 func (d *Decimal128) TypeName(gen Generator) string {
-	return gen.EasyTypeName(d.field)
+	return gen.UneasyTypeName(d.field)
 }
 
 func (d *Decimal128) ArgName(gen Generator) string {
@@ -33,21 +33,21 @@ func (d *Decimal128) AccessName(gen Generator) string {
 }
 
 func (d *Decimal128) NativeTypeName(gen Generator) string {
-	panic("implement me")
+	return gen.Dec128NativeTypeName()
 }
 
 func (d *Decimal128) Encoding(source string, gen Generator) error {
-	panic("implement me")
+	return gen.Dec128Encoding(source)
 }
 
 func (d *Decimal128) Helper(gen Generator) error {
-	panic("implement me")
+	return gen.Dec128Helpers(d)
 }
 
 func (d *Decimal128) TestingTypeName(gen Generator) string {
-	panic("implement me")
+	return gen.Dec128TestingTypeName()
 }
 
 func (d *Decimal128) TestEncoding(source string, gen Generator) error {
-	panic("implement me")
+	return gen.Dec128TestEncoding(d.scale, source)
 }

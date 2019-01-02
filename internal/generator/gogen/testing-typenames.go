@@ -44,6 +44,18 @@ func (gg *GoGen) Uint64TestingTypeName() string {
 	return "uint64"
 }
 
+func (gg *GoGen) Dec32TestingTypeName() string {
+	return "string"
+}
+
+func (gg *GoGen) Dec64TestingTypeName() string {
+	return "string"
+}
+
+func (gg *GoGen) Dec128TestingTypeName() string {
+	return "string"
+}
+
 // Float32TestingTypeName ...
 func (gg *GoGen) Float32TestingTypeName() string {
 	return "float32"

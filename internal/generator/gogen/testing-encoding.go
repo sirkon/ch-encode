@@ -56,6 +56,27 @@ func (gg *GoGen) Uint64TestEncoding(source string) error {
 	return err
 }
 
+func (gg *GoGen) Dec32TestEncoding(scale int, source string) error {
+	gg.regImport("", "github.com/sirkon/decconv")
+	text := "decconv.Encode32(%d, int32(%s)),"
+	_, err := fmt.Fprintf(gg.dest, text, scale, source)
+	return err
+}
+
+func (gg *GoGen) Dec64TestEncoding(scale int, source string) error {
+	gg.regImport("", "github.com/sirkon/decconv")
+	text := "decconv.Encode64(%d, int64(%s)),"
+	_, err := fmt.Fprintf(gg.dest, text, scale, source)
+	return err
+}
+
+func (gg *GoGen) Dec128TestEncoding(scale int, source string) error {
+	gg.regImport("", "github.com/sirkon/decconv")
+	text := "decconv.Encode128(%d, %s.Lo, %s.Hi),"
+	_, err := fmt.Fprintf(gg.dest, text, scale, source, source)
+	return err
+}
+
 // Float32TestEncoding ...
 func (gg *GoGen) Float32TestEncoding(source string) error {
 	_, err := fmt.Fprintf(gg.dest, "float32(%s),", source)
