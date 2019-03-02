@@ -3,10 +3,13 @@
 
 Clickhouse typesafe RowBinary insert data encoder generator for Go. Supported types:
 
-String | FixedString(N) | UIntX | IntX |Decimal(X,Y)| EnumX | Array(T)|FloatX|Nested<sup>*</sup>|Nullable(T)|
--------|----------------|-------|------|-------------|-------|---------|------|------|--------|
+String | FixedString(N) | UUID<sup>*</sup> | UIntX | IntX |Decimal(X,Y)| EnumX | Array(T)|FloatX|Nested<sup>**</sup>|Nullable(T)|
+-------|----------------|------|-------|------|-------------|-------|---------|------|------|--------|
 
-> <sup>*</sup>Nested types are supported in the same sense they are used in the Clickhouse itself: despite having clearly 
+> <sup>*</sup> UUID type rely on `github.com/google/uuid` 
+
+
+> <sup>\*\*</sup> Nested types are supported in the same sense they are used in the Clickhouse itself: despite having clearly 
 nested declaration they are represented as ordinary fields with dotted names (`[nested name].[subfield name]`) with DB level
 constraint on these fields (what are ordinary arrays of subfield's types) having the same length. We did the same: there's encoder level control implemented for Raw and Testing encoders for these arrays' length. There's no syntactic level grouping for them.
 
