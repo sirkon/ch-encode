@@ -124,6 +124,12 @@ enc.buffer.Write([]byte({{.var}}))
 	return err
 }
 
+// UUIDEncoding ...
+func (gg *GoGen) UUIDEncoding(source string) error {
+	_, err := fmt.Fprintf(gg.dest, "enc.buffer.Write(%s[:]);\n", source)
+	return err
+}
+
 // ArrayEncoding ...
 func (gg *GoGen) ArrayEncoding(source string, field generator.Field) error {
 	text := `

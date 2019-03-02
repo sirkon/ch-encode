@@ -73,6 +73,10 @@ func (gg *GoGen) useFmt() {
 	gg.regImport("", "fmt")
 }
 
+func (gg *GoGen) useGoogleUUID() {
+	gg.regImport("googleUUID", "github.com/google/uuid")
+}
+
 const headerTemplate = `
 package {{ .Package }}
 

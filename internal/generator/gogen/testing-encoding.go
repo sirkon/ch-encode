@@ -56,6 +56,7 @@ func (gg *GoGen) Uint64TestEncoding(source string) error {
 	return err
 }
 
+// Dec32TestEncoding ...
 func (gg *GoGen) Dec32TestEncoding(scale int, source string) error {
 	gg.regImport("", "github.com/sirkon/decconv")
 	text := "decconv.Encode32(%d, int32(%s)),"
@@ -63,6 +64,7 @@ func (gg *GoGen) Dec32TestEncoding(scale int, source string) error {
 	return err
 }
 
+// Dec64TestEncoding ...
 func (gg *GoGen) Dec64TestEncoding(scale int, source string) error {
 	gg.regImport("", "github.com/sirkon/decconv")
 	text := "decconv.Encode64(%d, int64(%s)),"
@@ -70,6 +72,7 @@ func (gg *GoGen) Dec64TestEncoding(scale int, source string) error {
 	return err
 }
 
+// Dec128TestEncoding ...
 func (gg *GoGen) Dec128TestEncoding(scale int, source string) error {
 	gg.regImport("", "github.com/sirkon/decconv")
 	text := "decconv.Encode128(%d, %s.Lo, %s.Hi),"
@@ -160,6 +163,13 @@ func (gg *GoGen) StringTestEncoding(source string) error {
 // FixedStringTestEncoding ...
 func (gg *GoGen) FixedStringTestEncoding(source string, length int) error {
 	_, err := fmt.Fprintf(gg.dest, "string(%s),", source)
+	return err
+}
+
+// UUIDTestEncoding ...
+func (gg *GoGen) UUIDTestEncoding(source string) error {
+	gg.useGoogleUUID()
+	_, err := fmt.Fprintf(gg.dest, "googleUUID.UUID(%s).String(),", source)
 	return err
 }
 

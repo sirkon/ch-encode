@@ -44,14 +44,17 @@ func (gg *GoGen) Uint64TestingTypeName() string {
 	return "uint64"
 }
 
+// Dec32TestingTypeName ...
 func (gg *GoGen) Dec32TestingTypeName() string {
 	return "string"
 }
 
+// Dec64TestingTypeName ...
 func (gg *GoGen) Dec64TestingTypeName() string {
 	return "string"
 }
 
+// Dec128TestingTypeName ...
 func (gg *GoGen) Dec128TestingTypeName() string {
 	return "string"
 }
@@ -88,6 +91,11 @@ func (gg *GoGen) StringTestingTypeName() string {
 
 // FixedStringTestingTypeName ...
 func (gg *GoGen) FixedStringTestingTypeName() string {
+	return "string"
+}
+
+// UUIDTestingTypeName ...
+func (gg *GoGen) UUIDTestingTypeName() string {
 	return "string"
 }
 

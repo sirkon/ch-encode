@@ -10,7 +10,7 @@ require (
 	github.com/sirkon/binenc v1.1.0
 	github.com/sirkon/go-diff v1.0.0
 	github.com/sirkon/gosrcfmt v1.5.0
-	github.com/sirkon/gotify v0.5.0
+	github.com/sirkon/gotify v0.6.0
 	github.com/sirkon/message v1.5.1
 	github.com/stretchr/testify v1.1.4
 	gopkg.in/check.v1 v1.0.0-20180628173108-788fd7840127 // indirect

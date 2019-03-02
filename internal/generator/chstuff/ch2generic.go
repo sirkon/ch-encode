@@ -33,6 +33,8 @@ func Meta2Field(meta FieldMeta) (field generator.Field) {
 		field = generator.NewString(meta.Name, meta.Type)
 	case "FixedString":
 		field = generator.NewFixedString(meta.Name, meta.Type, meta.FixedStringLen)
+	case "UUID":
+		field = generator.NewUUIDField(meta.Name, meta.Type)
 	case "Date":
 		field = generator.NewDate(meta.Name, meta.Type)
 	case "DateTime":

@@ -78,6 +78,7 @@ type Generator interface {
 	Float64NativeTypeName() string
 	StringNativeTypeName() string
 	FixedStringNativeTypeName() string
+	UUIDNativeTypeName() string
 	ArrayNativeTypeName(itemType Field) string
 	NullableNativeTypeName(itemType Field) string
 	NullableStringNativeTypeName() string
@@ -101,6 +102,7 @@ type Generator interface {
 	DateTimeTestingTypeName() string
 	StringTestingTypeName() string
 	FixedStringTestingTypeName() string
+	UUIDTestingTypeName() string
 	ArrayTestingTypeName(itemType Field) string
 	NullableTestingTypeName(itemType Field) string
 	NullableStringTestingTypeName() string
@@ -121,6 +123,7 @@ type Generator interface {
 	DateTimeEncoding(string) error
 	StringEncoding(string) error
 	FixedStringEncoding(string, int) error
+	UUIDEncoding(string) error
 	ArrayEncoding(string, Field) error
 	NullableEncoding(string, Field) error
 	NullableArrayEncoding(string, Field) error
@@ -144,6 +147,7 @@ type Generator interface {
 	DateTimeTestEncoding(string) error
 	StringTestEncoding(string) error
 	FixedStringTestEncoding(string, int) error
+	UUIDTestEncoding(string) error
 	ArrayTestEncoding(string, Field) error
 	NullableTestEncoding(string, Field) error
 	NullableStringTestEncoding(string) error

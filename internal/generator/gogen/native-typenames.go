@@ -72,6 +72,12 @@ func (gg *GoGen) FixedStringNativeTypeName() string {
 	return "[]byte"
 }
 
+// UUIDNativeTypeName ...
+func (gg *GoGen) UUIDNativeTypeName() string {
+	gg.useGoogleUUID()
+	return "googleUUID.UUID"
+}
+
 // ArrayNativeTypeName ...
 func (gg *GoGen) ArrayNativeTypeName(itemType generator.Field) string {
 	return "[]" + itemType.NativeTypeName(gg)
