@@ -10,14 +10,14 @@ import (
 
 	"github.com/go-yaml/yaml"
 
-	"github.com/sirkon/ch-encode/internal/generator"
-	"github.com/sirkon/ch-encode/internal/generator/chstuff"
-	"github.com/sirkon/ch-encode/internal/generator/gogen"
-	util2 "github.com/sirkon/ch-encode/util"
-
 	"github.com/sirkon/gosrcfmt"
 	"github.com/sirkon/gotify"
 	"github.com/sirkon/message"
+
+	"github.com/sirkon/ch-encode/internal/generator"
+	"github.com/sirkon/ch-encode/internal/generator/chstuff"
+	"github.com/sirkon/ch-encode/internal/generator/gogen"
+	"github.com/sirkon/ch-encode/internal/util"
 )
 
 func yamlSource(path string) map[string]string {
@@ -55,7 +55,7 @@ func action(isTesting bool, yamlDict string, jsonDict string, dateField string, 
 
 	goish := gotify.New(dict)
 
-	prms := util2.EnvCHParams()
+	prms := util.EnvCHParams()
 	connect, err := sql.Open("clickhouse", prms.DBURL())
 	if err != nil {
 		panic(err)
