@@ -80,7 +80,7 @@ func (gg *GoGen) DateTimeHelpers(field generator.Field) error {
         `,
 			field.TypeName(gg), field.TypeName(gg), field.TypeName(gg),
 			field.TypeName(gg), field.TypeName(gg), field.TypeName(gg)),
-		fmt.Sprintf("var %s compl%s", field.AccessName(gg), field.TypeName(gg), field.TypeName(gg)),
+		fmt.Sprintf("var %s compl%s", field.AccessName(gg), field.TypeName(gg)),
 	}
 	return gg.RawData(strings.Join(lines, "\n"))
 }
