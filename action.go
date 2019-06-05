@@ -44,7 +44,7 @@ func jsonSource(path string) map[string]string {
 	return res
 }
 
-func action(isTesting bool, yamlDict string, jsonDict string, dateField string, tables []string) error {
+func action(isTesting bool, yamlDict string, jsonDict string, dateField string, tables []string, connParams string) error {
 	var dict map[string]string
 	if len(yamlDict) > 0 {
 		dict = yamlSource(yamlDict)
@@ -55,7 +55,7 @@ func action(isTesting bool, yamlDict string, jsonDict string, dateField string, 
 
 	goish := gotify.New(dict)
 
-	prms := util.EnvCHParams()
+	prms := util.EnvCHParams(connParams)
 	connect, err := sql.Open("clickhouse", prms.DBURL())
 	if err != nil {
 		panic(err)

@@ -3,7 +3,7 @@ package main
 import (
 	"os"
 
-	"github.com/docopt/docopt.go"
+	cli "github.com/jawher/mow.cli"
 	_ "github.com/mailru/go-clickhouse" // Mail.RU's clickhouse connector
 	_ "github.com/sirkon/binenc"        // Binary encoding library go get's "dependency", generated package will need it
 	_ "github.com/sirkon/go-diff"       // Diff for testing
@@ -11,38 +11,36 @@ import (
 )
 
 const (
-	version = "2.2"
+	version = "0.1.0"
 )
 
+func chDefaultParams() string {
+	res := os.Getenv("CLICKHOUSE")
+	if len(res) > 0 {
+		return res
+	}
+	return "default@localhost:8123/default"
+}
+
 func main() {
-	usage := `Generate type safe code to insert into Clickhouse tables
+	app := cli.App("ch-encode", "Go code generator for Clickhouse data insert")
+	var (
+		test      = app.BoolOpt("test", false, "Don't save generated code, just write it into the stdout")
+		yamlDict  = app.StringOpt("yaml-dict", "", "Use this YAML formatted dictionary to generate Goish names")
+		jsonDict  = app.StringOpt("json-dict", "", "User this JSON formatted dictionary to generate Goish names")
+		dateField = app.StringOpt("date-field", "", "Use this field as a date")
+		chConn    = app.StringOpt("clickhouse", chDefaultParams(), "Clickhouse connection params")
+		tables    = app.StringsArg("TABLES", nil, "List of clickhouse tables")
+	)
+	app.Spec = `[--test] [--yaml-dict|--json-dict] [--date-field] [--clickhouse] TABLES...`
+	app.Action = func() {
+		if err := action(*test, *yamlDict, *jsonDict, *dateField, *tables, *chConn); err != nil {
+			message.Fatal(err)
+		}
 
-Usage:
-  ch-encode [--test] [--yaml-dict <src> | --json-dict <src>] --date-field <date field> <table>...
-  ch-encode -h | --help
-  ch-encode --version
+	}
 
-Options:
-  -h --help                 Show this screen.
-  --version                 Show version.
-  --test                    Don't save generated code, just write it into the stdout
-  --yaml-dict <src>         Use this YAML formatted dictionary to generate Goish names
-  --json-dict <src>         Use this JSON formatted dictionary to generate Goish names
-  --date-field <date field> Use this field as date
-`
-	arguments, err := docopt.ParseArgs(usage, os.Args[1:], version)
-	if err != nil {
+	if err := app.Run(os.Args); err != nil {
 		message.Fatal(err)
 	}
-	isTesting := arguments["--test"].(bool)
-	var yamlDict string
-	var jsonDict string
-	var dateField string
-	if arguments["--yaml-dict"] != nil {
-		yamlDict = arguments["--yaml-dict"].(string)
-	}
-	if arguments["--json-dict"] != nil {
-		jsonDict = arguments["--json-dict"].(string)
-	}
-	action(isTesting, yamlDict, jsonDict, dateField, arguments["<table>"].([]string))
 }

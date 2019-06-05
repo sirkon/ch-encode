@@ -51,8 +51,6 @@ func (ch CHParams) DBURL() string {
 	return req.URL.String()
 }
 
-//go:generate logparsergen --source=testingch.script --package=util
-
 // ExtractCHParams extracts CH connection components from string
 // [user[:password]@]host:port[/dbname]
 func ExtractCHParams(data string) (res CHParams) {

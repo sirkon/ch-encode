@@ -114,6 +114,7 @@ func (gg *GoGen) EnumTestEncoding(source string, safeMapping map[string]int) err
 	if err != nil {
 		return err
 	}
+	gg.regImport("", "fmt")
 	err = tmpl.Execute(gg.dest, map[string]interface{}{
 		"source":  source,
 		"mapping": enumItems,
