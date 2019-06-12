@@ -6,6 +6,7 @@ require (
 	github.com/kr/pretty v0.1.0 // indirect
 	github.com/mailru/go-clickhouse v1.1.0
 	github.com/sirkon/binenc v1.1.0
+	github.com/sirkon/ch-insert v1.1.0 // indirect
 	github.com/sirkon/go-diff v1.0.0
 	github.com/sirkon/gosrcfmt v1.5.0
 	github.com/sirkon/gotify v0.6.0

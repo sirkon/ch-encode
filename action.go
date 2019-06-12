@@ -99,16 +99,6 @@ func action(isTesting bool, yamlDict string, jsonDict string, dateField string, 
 			message.Critical(err)
 		}
 
-		// Now go-specific testing part
-		err = EncoderReflectionTest(
-			prms,
-			GoModuleTest(goish, table),
-			goish.Package(table),
-			table,
-		)
-		if err != nil {
-			message.Critical(err)
-		}
 		message.Noticef("Table `\033[1m%s\033[0m` encoder generated", table)
 	}
 	return nil

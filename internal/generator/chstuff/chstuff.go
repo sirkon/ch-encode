@@ -12,6 +12,7 @@ import (
 type FieldMeta struct {
 	Name           string
 	Type           string
+	RawType        string
 	EnumData       map[string]int
 	FixedStringLen int
 	Decimal        struct {
@@ -27,18 +28,21 @@ func retreiveField(name, ftype string) (meta FieldMeta, err error) {
 	meta.Name = name
 	if strings.HasPrefix(ftype, "Enum8(") && strings.HasSuffix(ftype, ")") {
 		meta.Type = "Enum8"
+		meta.RawType = ftype
 		meta.EnumData, err = decomposeEnumArgs(ftype)
 		if err != nil {
 			return
 		}
 	} else if strings.HasPrefix(ftype, "Enum16(") && strings.HasSuffix(ftype, ")") {
 		meta.Type = "Enum16"
+		meta.RawType = ftype
 		meta.EnumData, err = decomposeEnumArgs(ftype)
 		if err != nil {
 			return
 		}
 	} else if strings.HasPrefix(ftype, "Array(") && strings.HasSuffix(ftype, ")") {
 		meta.Type = "Array"
+		meta.RawType = ftype
 		submeta, err := retreiveField("", ftype[6:len(ftype)-1])
 		if err != nil {
 			return meta, err
@@ -46,6 +50,7 @@ func retreiveField(name, ftype string) (meta FieldMeta, err error) {
 		meta.Subtype = &submeta
 	} else if strings.HasPrefix(ftype, "FixedString(") && strings.HasSuffix(ftype, ")") {
 		meta.Type = "FixedString"
+		meta.RawType = ftype
 		submeta := ftype[len("FixedString(") : len(ftype)-1]
 		length, err := strconv.ParseInt(submeta, 10, 64)
 		if err != nil {
@@ -54,6 +59,7 @@ func retreiveField(name, ftype string) (meta FieldMeta, err error) {
 		meta.FixedStringLen = int(length)
 	} else if strings.HasPrefix(ftype, "Nullable(") && strings.HasSuffix(ftype, ")") {
 		meta.Type = "Nullable"
+		meta.RawType = ftype
 		submeta, err := retreiveField(name, ftype[9:len(ftype)-1])
 		if err != nil {
 			return meta, err
@@ -61,6 +67,7 @@ func retreiveField(name, ftype string) (meta FieldMeta, err error) {
 		meta.Subtype = &submeta
 	} else if ok, _ := decExtractor.Extract(ftype); ok {
 		meta.Type = "Decimal"
+		meta.RawType = ftype
 		meta.Decimal.Precision = decExtractor.Precision
 		meta.Decimal.Scale = decExtractor.Scale
 		switch {
@@ -76,6 +83,7 @@ func retreiveField(name, ftype string) (meta FieldMeta, err error) {
 		}
 	} else {
 		meta.Type = ftype
+		meta.RawType = ftype
 	}
 	return
 }
