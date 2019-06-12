@@ -89,7 +89,10 @@ Example.
      	}
      	defer inserter.Close()
      
-     	encoder := test.NewTestRawEncoder(inserter)
+     	encoder, err := test.NewTestRawEncoder(inserter)
+ 	    if err != nil {
+            panic(err) // must be scheme desync
+        } 	  
      	if err := encoder.Encode(test.Date.FromTime(time.Now()), test.UID("123"), test.Hidden(1)); err != nil {
      		panic(err)
      	}
