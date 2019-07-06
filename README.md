@@ -1,5 +1,3 @@
-# Moved into github.com/sirkon/ch-insert/...
-
 # ch-encode
 [![Build Status](https://travis-ci.org/sirkon/ch-encode.svg?branch=master)](https://travis-ci.org/sirkon/ch-encode)
 
